@@ -85,7 +85,7 @@ public class MortarAndPestleBlock extends Block implements IBE<MortarAndPestleBl
                                  BlockHitResult ray) {
 
         if (player.getItemInHand(hand)
-                .isEmpty()) {
+                .isEmpty() && player.isShiftKeyDown()) {
             withBlockEntityDo(world, pos, millstone -> {
                 IItemHandlerModifiable inv = millstone.inputInv;
                 for (int slot = 0; slot < inv.getSlots(); slot++) {
