@@ -25,19 +25,26 @@ import com.freezedown.metallurgica.content.primitive.log_pile.IgnitableLogPileBl
 import com.freezedown.metallurgica.content.primitive.log_pile.LogPileBlock;
 import com.freezedown.metallurgica.content.primitive.log_pile.LogPileGenerator;
 import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlock;
+import com.freezedown.metallurgica.content.primitive.mortar.MortarAndPestleBlock;
 import com.freezedown.metallurgica.content.temperature.DebugTempBlock;
 import com.freezedown.metallurgica.foundation.MBuilderTransformers;
 import com.freezedown.metallurgica.foundation.config.server.subcat.MStress;
 import com.freezedown.metallurgica.foundation.registrate.MetallurgicaRegistrate;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlock;
 import com.freezedown.metallurgica.registry.material.init.MetMaterialBlocks;
+import com.simibubi.create.AllDisplaySources;
+import com.simibubi.create.AllMountedStorageTypes;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.decoration.palettes.ConnectedGlassBlock;
+import com.simibubi.create.content.logistics.depot.DepotBlock;
+import com.simibubi.create.content.logistics.depot.MountedDepotInteractionBehaviour;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;
+import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
+import com.simibubi.create.infrastructure.config.CStress;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.client.renderer.RenderType;
@@ -51,6 +58,9 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.LimitCount;
 
+import static com.simibubi.create.api.behaviour.display.DisplaySource.displaySource;
+import static com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour.interactionBehaviour;
+import static com.simibubi.create.api.contraption.storage.item.MountedItemStorageType.mountedItemStorage;
 import static com.simibubi.create.foundation.data.CreateRegistrate.casingConnectivity;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -370,6 +380,16 @@ public class MetallurgicaBlocks {
             .simpleItem()
             .lang("Drill Expansion")
             .register();
+
+
+    public static final BlockEntry<MortarAndPestleBlock> mortarAndPestle = registrate.block("mortar_and_pestle", MortarAndPestleBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.mapColor(MapColor.DIRT))
+            .transform(pickaxeOnly())
+            .simpleItem()
+            .lang("Mortar And Pestle")
+            .register();
+
 //METAL BLOCKS
     //CAST
     //public static final BlockEntry<Block>

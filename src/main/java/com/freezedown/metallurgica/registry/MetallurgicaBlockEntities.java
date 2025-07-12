@@ -23,6 +23,7 @@ import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.CeramicPotBlockEntity;
 import com.freezedown.metallurgica.content.primitive.ceramic.ceramic_pot.CeramicPotRenderer;
 import com.freezedown.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlockEntity;
+import com.freezedown.metallurgica.content.primitive.mortar.MortarAndPestleBlockEntity;
 import com.freezedown.metallurgica.content.temperature.DebugTempBlockEntity;
 import com.freezedown.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
 import com.freezedown.metallurgica.registry.material.init.MetMaterialBlockEntities;
@@ -119,10 +120,14 @@ public class MetallurgicaBlockEntities {
                     .renderer(() -> ShakingTableRenderer::new)
                     .validBlocks(MetallurgicaBlocks.shakingTable)
                     .register();
-    
+
     public static final BlockEntityEntry<CharredLogPileBlockEntity> charredLogPile =
             registrate.blockEntity("charred_log_pile", CharredLogPileBlockEntity::new)
                     .validBlocks(MetallurgicaBlocks.charredLogPile).register();
+
+    public static final BlockEntityEntry<MortarAndPestleBlockEntity> mortarAndPestle =
+            registrate.blockEntity("mortar_and_pestle", MortarAndPestleBlockEntity::new)
+                    .validBlocks(MetallurgicaBlocks.mortarAndPestle).register();
 
     public static void register() {
         MetMaterialBlockEntities.register(registrate().getModEventBus());
