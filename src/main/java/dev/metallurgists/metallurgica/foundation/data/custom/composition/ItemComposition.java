@@ -16,9 +16,4 @@ public record ItemComposition(Item item, List<SubComposition> compositions) {
             Codec.list(SubComposition.CODEC).fieldOf("compositions").forGetter(ItemComposition::compositions)
     ).apply(instance, ItemComposition::new));
 
-    public JsonObject toJson() {
-        JsonObject json = new JsonObject();
-
-        return json;
-    }
 }

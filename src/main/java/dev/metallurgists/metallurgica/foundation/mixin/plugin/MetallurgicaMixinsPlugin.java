@@ -21,10 +21,10 @@ public class MetallurgicaMixinsPlugin implements IMixinConfigPlugin {
     
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (mixinClassName.contains("com.metallurgists.metallurgica.foundation.mixin.jei")) {
+        if (mixinClassName.contains("dev.metallurgists.metallurgica.foundation.mixin.jei")) {
             return CommonUtil.isClassFound("mezz.jei.api.IModPlugin");
         }
-        if (mixinClassName.contains("com.metallurgists.metallurgica.foundation.mixin.emi")) {
+        if (mixinClassName.contains("dev.metallurgists.metallurgica.foundation.mixin.emi")) {
             return CommonUtil.isClassFound("dev.emi.emi.api.EmiPlugin");
         }
         return true;

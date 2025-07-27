@@ -70,7 +70,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
      */
     protected MetallurgicaRegistrate(String modid) {
         super(modid);
-        COMP_MOD_BLACKLIST.add("gtceu");
+        COMP_MOD_BLACKLIST.add("metallurgica");
     }
 
     // UTIL
