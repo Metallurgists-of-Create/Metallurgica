@@ -33,7 +33,6 @@
     "tfmg.CastingBasinBlockEntityMixin",
     "tfmg.SteelTankBlockEntityMixin",
     "tfmg.VatBlockEntityMixin",
-    "tfmg.WindingMachineRendererMixin",
     "workplace_hazards.EntityMixin",
     "workplace_hazards.PressingBehaviourMixin"
   ],

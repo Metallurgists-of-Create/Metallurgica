@@ -1,9 +1,12 @@
 package dev.metallurgists.metallurgica.infastructure.material.registry.flags.item;
 
+import com.drmangotea.tfmg.config.TFMGResistivity;
+import com.drmangotea.tfmg.content.electricity.connection.cable_type.CableType;
+import com.drmangotea.tfmg.content.electricity.connection.cable_type.CableTypeEntry;
 import com.drmangotea.tfmg.content.electricity.connection.cables.CableConnection;
+import com.drmangotea.tfmg.registry.TFMGCableTypes;
 import com.drmangotea.tfmg.registry.TFMGItems;
 import dev.metallurgists.metallurgica.Metallurgica;
-import dev.metallurgists.metallurgica.foundation.config.TFMGConductor;
 import dev.metallurgists.metallurgica.foundation.material.item.IMaterialItem;
 import dev.metallurgists.metallurgica.foundation.material.item.MaterialSpoolItem;
 import dev.metallurgists.metallurgica.infastructure.material.registry.flags.base.interfaces.IItemRegistry;
@@ -16,8 +19,6 @@ import dev.metallurgists.metallurgica.infastructure.material.registry.flags.base
 import dev.metallurgists.metallurgica.infastructure.material.registry.flags.base.ItemFlag;
 import dev.metallurgists.metallurgica.infastructure.material.registry.flags.base.MaterialFlags;
 import dev.metallurgists.metallurgica.foundation.registrate.MetallurgicaRegistrate;
-import dev.metallurgists.metallurgica.infastructure.conductor.Conductor;
-import dev.metallurgists.metallurgica.infastructure.conductor.ConductorEntry;
 import dev.metallurgists.metallurgica.infastructure.material.scrapping.ScrappingData;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -41,20 +42,19 @@ import java.util.function.Consumer;
 
 import static dev.metallurgists.metallurgica.foundation.data.runtime.assets.MetallurgicaModels.isDeleteMePresent;
 import static dev.metallurgists.metallurgica.infastructure.material.MaterialHelper.getNameForRecipe;
-import static com.tterrag.registrate.providers.RegistrateRecipeProvider.has;
 
 public class SpoolFlag extends ItemFlag implements IRecipeHandler, IScrappable, IPartialHolder {
 
     @Getter
-    private Pair<int[],int[]> colors;
+    private int color;
 
     @Getter
     private double resistivity;
 
-    public SpoolFlag(double resistivity, Pair<int[],int[]> colors) {
+    public SpoolFlag(double resistivity, int color) {
         this("metallurgica");
         this.resistivity = resistivity;
-        this.colors = colors;
+        this.color = color;
         this.setTagPatterns(List.of("metallurgica:spools", "metallurgica:spools/%s"));
     }
 
@@ -69,18 +69,17 @@ public class SpoolFlag extends ItemFlag implements IRecipeHandler, IScrappable, 
 
     @Override
     public ItemEntry<? extends IMaterialItem> registerItem(@NotNull Material material, IItemRegistry flag, @NotNull MetallurgicaRegistrate registrate) {
-        if (colors == null) {
-            colors = Pair.of(new int[]{0,0,0}, new int[]{0,0,0});
-        }
-        ConductorEntry<Conductor> conductor = registrate.conductor(material.getName(), Conductor::new)
-                .properties(p -> p.color1(getColors().getFirst()).color2(getColors().getSecond()))
-                .transform(TFMGConductor.setResistivity(getResistivity()))
-                .register();
-        Color colour = new Color(colors.getFirst()[0], colors.getFirst()[1], colors.getFirst()[2]);
-        return registrate.item(getIdPattern().formatted(material.getName()), (p) -> new MaterialSpoolItem(p, null, colour.getRGB(), CableConnection.CableType.COPPER, material, flag))
+        Color colour = new Color(color);
+        ResourceLocation cableTypeKey = new ResourceLocation(registrate.getModid(), material.getName());
+        ItemEntry<? extends IMaterialItem> spool = registrate.item(getIdPattern().formatted(material.getName()), (p) -> new MaterialSpoolItem(p, colour.getRGB(), cableTypeKey, material, flag))
                 .setData(ProviderType.LANG, NonNullBiConsumer.noop())
                 .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
                 .register();
+        CableTypeEntry<CableType> cableType = registrate.cableType(material.getName(), CableType::new)
+                .properties(p -> p.color(colour.getRGB()).spool(spool))
+                .transform(TFMGResistivity.setResistivity(getResistivity()))
+                .register();
+        return spool;
     }
 
     @Override

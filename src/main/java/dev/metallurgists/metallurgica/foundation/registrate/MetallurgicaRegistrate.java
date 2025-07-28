@@ -7,10 +7,10 @@ import dev.metallurgists.metallurgica.foundation.fluid.MaterialFluidType;
 import dev.metallurgists.metallurgica.foundation.fluid.MoltenMetalFluid;
 import dev.metallurgists.metallurgica.foundation.fluid.VirtualMaterialFluid;
 import dev.metallurgists.metallurgica.foundation.item.AlloyItem;
+import com.drmangotea.tfmg.content.electricity.connection.cable_type.CableType;
+import com.drmangotea.tfmg.content.electricity.connection.cable_type.CableTypeBuilder;
 import dev.metallurgists.metallurgica.infastructure.material.Material;
 import dev.metallurgists.metallurgica.foundation.item.MetallurgicaItem;
-import dev.metallurgists.metallurgica.infastructure.conductor.Conductor;
-import dev.metallurgists.metallurgica.infastructure.conductor.ConductorBuilder;
 import dev.metallurgists.metallurgica.infastructure.element.Element;
 import dev.metallurgists.metallurgica.infastructure.element.ElementBuilder;
 import dev.metallurgists.metallurgica.infastructure.material.MaterialBuilder;
@@ -180,20 +180,20 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return entry(name, callback -> ElementBuilder.create(this, parent, name, symbol, callback, factory));
     }
 
-    public <T extends Conductor> ConductorBuilder<T, MetallurgicaRegistrate> conductor(NonNullFunction<Conductor.Properties, T> factory) {
-        return conductor((MetallurgicaRegistrate) self(), factory);
+    public <T extends CableType> CableTypeBuilder<T, MetallurgicaRegistrate> cableType(NonNullFunction<CableType.Properties, T> factory) {
+        return cableType((MetallurgicaRegistrate) self(), factory);
     }
 
-    public <T extends Conductor> ConductorBuilder<T, MetallurgicaRegistrate> conductor(String name, NonNullFunction<Conductor.Properties, T> factory) {
-        return conductor((MetallurgicaRegistrate) self(), name, factory);
+    public <T extends CableType> CableTypeBuilder<T, MetallurgicaRegistrate> cableType(String name, NonNullFunction<CableType.Properties, T> factory) {
+        return cableType((MetallurgicaRegistrate) self(), name, factory);
     }
 
-    public <T extends Conductor, P> ConductorBuilder<T, P> conductor(P parent, NonNullFunction<Conductor.Properties, T> factory) {
-        return conductor(parent, currentName(), factory);
+    public <T extends CableType, P> CableTypeBuilder<T, P> cableType(P parent, NonNullFunction<CableType.Properties, T> factory) {
+        return cableType(parent, currentName(), factory);
     }
 
-    public <T extends Conductor, P> ConductorBuilder<T, P> conductor(P parent, String name, NonNullFunction<Conductor.Properties, T> factory) {
-        return entry(name, callback -> ConductorBuilder.create(this, parent, name, callback, factory));
+    public <T extends CableType, P> CableTypeBuilder<T, P> cableType(P parent, String name, NonNullFunction<CableType.Properties, T> factory) {
+        return entry(name, callback -> CableTypeBuilder.create(this, parent, name, callback, factory));
     }
 
     public <T extends Material> MaterialBuilder<T, MetallurgicaRegistrate> material(NonNullFunction<Material.Builder, T> factory) {

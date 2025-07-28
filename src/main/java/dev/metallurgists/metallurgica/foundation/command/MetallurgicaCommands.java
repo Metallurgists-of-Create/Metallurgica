@@ -1,6 +1,5 @@
 package dev.metallurgists.metallurgica.foundation.command;
 
-import dev.metallurgists.metallurgica.foundation.command.debug.ConductorsCommand;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.CommandNode;
@@ -18,7 +17,6 @@ public class MetallurgicaCommands {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {
         LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal("metallurgica")
                 .requires(cs -> cs.hasPermission(0))
-                .then(ConductorsCommand.register())
                 ;
 
         LiteralCommandNode<CommandSourceStack> createRoot = dispatcher.register(root);

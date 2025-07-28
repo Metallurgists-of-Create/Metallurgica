@@ -78,6 +78,11 @@ public class FlotationCellBlockEntity extends SmartBlockEntity implements IVatMa
         return "metallurgica:flotation_cell";
     }
 
+    @Override
+    public boolean canOperate(VatBlockEntity vatBlockEntity) {
+        return getCatalyst() != null;
+    }
+
     private FlotationCatalyst getCatalyst() {
         if (getLevel() == null) return null;
         List<FlotationCatalyst> recipes = getLevel().getRecipeManager().getAllRecipesFor(MetallurgicaRecipeTypes.flotation_catalyst.getType());

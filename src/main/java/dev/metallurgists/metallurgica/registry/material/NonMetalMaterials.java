@@ -1,6 +1,5 @@
 package dev.metallurgists.metallurgica.registry.material;
 
-import dev.metallurgists.metallurgica.foundation.item.WireColours;
 import dev.metallurgists.metallurgica.infastructure.material.registry.flags.block.SheetmetalFlag;
 import dev.metallurgists.metallurgica.infastructure.material.registry.flags.block.StorageBlockFlag;
 import dev.metallurgists.metallurgica.infastructure.material.registry.flags.fluid.LiquidFlag;
@@ -26,7 +25,7 @@ public class NonMetalMaterials {
                         new SheetFlag().pressTimes(5),
                         new MoltenFlag(9999.0),
                         new DustFlag(),
-                        new SpoolFlag(1, WireColours.missing),
+                        new SpoolFlag(1, 0xb32aca),
                         new MineralFlag(true),
                         new RubbleFlag().crushing().bonusChance(0.001f)
                 ));

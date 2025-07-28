@@ -1,6 +1,5 @@
 package dev.metallurgists.metallurgica.registry.material;
 
-import dev.metallurgists.metallurgica.foundation.item.WireColours;
 import dev.metallurgists.metallurgica.infastructure.material.registry.flags.FlagKey;
 import dev.metallurgists.metallurgica.infastructure.material.registry.flags.block.*;
 import dev.metallurgists.metallurgica.infastructure.material.registry.flags.fluid.MoltenFlag;
@@ -98,7 +97,7 @@ public class MetalMaterials {
                         new SheetFlag(),
                         new MoltenFlag(1541.0),
                         new DustFlag(),
-                        new SpoolFlag(0.0124, WireColours.scandium)
+                        new SpoolFlag(0.0124, 0xedebd8)
                 ));
         LEAD = createMaterial("lead", (b) -> b
                 .element(MetallurgicaElements.LEAD)

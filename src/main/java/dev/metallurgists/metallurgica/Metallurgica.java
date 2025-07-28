@@ -9,7 +9,6 @@ import dev.metallurgists.metallurgica.foundation.config.MetallurgicaConfigs;
 import dev.metallurgists.metallurgica.foundation.data.MetallurgicaDatagen;
 import dev.metallurgists.metallurgica.foundation.worldgen.MetallurgicaFeatures;
 import dev.metallurgists.metallurgica.foundation.worldgen.MetallurgicaPlacementModifiers;
-import dev.metallurgists.metallurgica.infastructure.conductor.ConductorStats;
 import dev.metallurgists.metallurgica.foundation.temperature.server.TemperatureHandler;
 import dev.metallurgists.metallurgica.registry.*;
 import dev.metallurgists.metallurgica.registry.material.*;
@@ -71,7 +70,7 @@ public class Metallurgica
     public static final RegistryObject<Codec<? extends SurfaceDepositsModifier>> surfaceDeposits_CODEC = BIOME_MODIFIERS.register("generation_surface_deposits", () -> Codec.unit(SurfaceDepositsModifier.INSTANCE));
     public static final FontHelper.Palette METALLURGICA_PALETTE = new FontHelper.Palette(styleFromColor(0x383d59), styleFromColor(0x717388));
     static {
-        registrate.setTooltipModifierFactory((item) -> (new ItemDescription.Modifier(item, METALLURGICA_PALETTE)).andThen(TooltipModifier.mapNull(KineticStats.create(item))).andThen(TooltipModifier.mapNull(ConductorStats.create(item))));
+        registrate.setTooltipModifierFactory((item) -> (new ItemDescription.Modifier(item, METALLURGICA_PALETTE)).andThen(TooltipModifier.mapNull(KineticStats.create(item))));
     }
     
     public Metallurgica() {

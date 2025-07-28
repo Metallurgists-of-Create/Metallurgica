@@ -25,5 +25,7 @@
   "metallurgica.upset_left": "Upset (Left)",
   "metallurgica.upset_right": "Upset (Right)",
   "metallurgica.heavy_hit": "Heavy Hit",
-  "metallurgica.split": "Split"
+  "metallurgica.split": "Split",
+
+  "create.goggles.vat.metallurgica.flotation_cell": "Flotation Cell"
 }

@@ -1,4 +1,4 @@
-// 1.20.1	2025-07-21T22:08:00.1766146	Registrate Provider for metallurgica [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2025-07-28T14:07:36.7158493	Registrate Provider for metallurgica [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 10811cfe0f93f3f9b8edaa6bdeccc627c164f73e assets/metallurgica/blockstates/ashed_charcoal_pile.json
 70c78d87f76ee255ee2502aeefcfca15f1ef2df9 assets/metallurgica/blockstates/bellows_intake.json
 be9648772ff540c83f4ab5a59f92d7cd1913eca1 assets/metallurgica/blockstates/black_sand.json
@@ -37,8 +37,8 @@ a7f031c630e113e6927bfb88be2d3f1580acb6a8 assets/metallurgica/blockstates/salt_bl
 c9fdb6302c46d54370ebc8b202b785c580834824 assets/metallurgica/blockstates/silicon_sand.json
 380932457c72e4938dae0375845c8763457e2646 assets/metallurgica/blockstates/unfired_ceramic_pot.json
 c6842eb42172f6deace17075963dd2133a607c52 assets/metallurgica/blockstates/unfired_crucible.json
-960752bc367cb9394999f66d60d8b6dac68947b7 assets/metallurgica/lang/en_ud.json
-9f338ebc0657ec898a1646ac20462eef1575361a assets/metallurgica/lang/en_us.json
+c0c301ec54b3a110dd2b791bec1997ee7a2c7c4e assets/metallurgica/lang/en_ud.json
+3bcbedec6bcd50bdcf87457971cd9fc90633a931 assets/metallurgica/lang/en_us.json
 0581a8cd954972a66911cbdfd289c634384eca1e assets/metallurgica/models/block/ashed_charcoal_pile_1.json
 23fbbe5d43ff05d8ad7e81dcf007051c4280de41 assets/metallurgica/models/block/ashed_charcoal_pile_2.json
 2fc947223161f7a58e789f6e66efea763155f02d assets/metallurgica/models/block/ashed_charcoal_pile_3.json

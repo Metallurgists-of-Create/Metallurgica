@@ -6,14 +6,15 @@ import dev.metallurgists.metallurgica.infastructure.material.Material;
 import dev.metallurgists.metallurgica.infastructure.material.registry.flags.base.interfaces.IItemRegistry;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class MaterialSpoolItem extends SpoolItem implements IMaterialItem {
     public final Material material;
     public final IItemRegistry itemFlag;
 
-    public MaterialSpoolItem(Properties properties, PartialModel model, int barColor, CableConnection.CableType type, Material material, IItemRegistry itemFlag) {
-        super(properties, model, barColor, type);
+    public MaterialSpoolItem(Properties properties, int barColor, ResourceLocation type, Material material, IItemRegistry itemFlag) {
+        super(properties, barColor, type);
         this.material = material;
         this.itemFlag = itemFlag;
     }
