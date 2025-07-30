@@ -5,6 +5,8 @@ import dev.metallurgists.metallurgica.Metallurgica;
 import com.simibubi.create.Create;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import dev.metallurgists.rutile.api.plugin.IRutilePlugin;
+import dev.metallurgists.rutile.api.plugin.RutilePluginFinder;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import net.createmod.catnip.config.ConfigBase;
@@ -16,7 +18,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.DoubleSupplier;
+import java.util.stream.Collectors;
 
 public class MStress extends ConfigBase {
     // bump this version to reset configured values.
@@ -71,7 +75,7 @@ public class MStress extends ConfigBase {
 
     public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> setImpact(double value) {
         return builder -> {
-            assertFromMetallurgica(builder);
+            assertFromRutilePlugin(builder);
             ResourceLocation id = Create.asResource(builder.getName());
             DEFAULT_IMPACTS.put(id, value);
             return builder;
@@ -80,16 +84,17 @@ public class MStress extends ConfigBase {
 
     public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> setCapacity(double value) {
         return builder -> {
-            assertFromMetallurgica(builder);
+            assertFromRutilePlugin(builder);
             ResourceLocation id = Create.asResource(builder.getName());
             DEFAULT_CAPACITIES.put(id, value);
             return builder;
         };
     }
 
-    private static void assertFromMetallurgica(BlockBuilder<?, ?> builder) {
-        if (!builder.getOwner().getModid().equals(Metallurgica.ID)) {
-            throw new IllegalStateException("Non-Create blocks cannot be added to Metallurgica's config.");
+    private static void assertFromRutilePlugin(BlockBuilder<?, ?> builder) {
+        Set<String> permittedNamespaces = RutilePluginFinder.getModPlugins().stream().map(IRutilePlugin::getPluginNamespace).collect(Collectors.toSet());
+        if (!permittedNamespaces.contains(builder.getOwner().getModid())) {
+            throw new IllegalStateException("Non-Rutile blocks cannot be added to Metallurgica's config.");
         }
     }
     

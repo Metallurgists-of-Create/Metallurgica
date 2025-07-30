@@ -32,17 +32,6 @@ public class MoltenFlag extends FluidFlag {
         return FlagKey.MOLTEN;
     }
 
-    @ApiStatus.Internal
-    public void registerFluids(@NotNull Material material, @NotNull MetallurgicaRegistrate registrate) {
-        //List<FluidEntry<?>> fluidEntries = new ArrayList<>();
-        //if (material.hasFlag(FlagKey.INGOT)) {
-        //    FluidEntry<?> fluid = registrate.moltenMetal(material, meltingPoint);
-        //    fluidEntries.add(fluid);
-        //}
-        //if (!fluidEntries.isEmpty())
-        //    MetMaterials.materialFluids.put(material, fluidEntries);
-    }
-
     @Override
     public void verifyFlag(MaterialFlags flags) {
 
@@ -50,11 +39,11 @@ public class MoltenFlag extends FluidFlag {
 
     @Override
     public FluidEntry<? extends IMaterialFluid> registerFluid(@NotNull Material material, IFluidRegistry flag, @NotNull MetallurgicaRegistrate registrate) {
-        return registrate.moltenMetal(this.getIdPattern().formatted(material.getName()), material, flag, meltingPoint)
-                .bucket((sup, p) -> new MaterialBucketItem(sup, p, material, flag))
-                .setData(ProviderType.LANG, NonNullBiConsumer.noop())
-                .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
-                .build()
-                .register();
+        return null;//registrate.moltenMetal(this.getIdPattern().formatted(material.getName()), material, flag, meltingPoint)
+                //.bucket((sup, p) -> new MaterialBucketItem(sup, p, material, flag))
+                //.setData(ProviderType.LANG, NonNullBiConsumer.noop())
+                //.setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
+                //.build()
+                //.register();
     }
 }

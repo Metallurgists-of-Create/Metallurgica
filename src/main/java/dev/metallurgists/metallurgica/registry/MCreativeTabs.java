@@ -1,6 +1,8 @@
 package dev.metallurgists.metallurgica.registry;
 
 import dev.metallurgists.metallurgica.Metallurgica;
+import dev.metallurgists.metallurgica.compat.rutile.materials.MetalMaterials;
+import dev.metallurgists.metallurgica.compat.rutile.materials.MetallurgicaMaterials;
 import dev.metallurgists.metallurgica.foundation.material.item.MaterialSpoolItem;
 import dev.metallurgists.metallurgica.infastructure.material.MaterialHelper;
 import dev.metallurgists.metallurgica.infastructure.material.registry.flags.FlagKey;
@@ -9,6 +11,8 @@ import com.simibubi.create.AllCreativeModeTabs;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.RegistryEntry;
+import dev.metallurgists.rutile.registry.RutileFlagKeys;
+import dev.metallurgists.rutile.util.helpers.MaterialHelpers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -79,6 +83,6 @@ public class MCreativeTabs {
     static {
         CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, "tfmg");
         MAIN = CREATIVE_MODE_TABS.register("main", () -> CreativeModeTab.builder().withTabsBefore(AllCreativeModeTabs.PALETTES_CREATIVE_TAB.getId()).title(Component.translatable("itemGroup.metallurgica.base")).icon(MetallurgicaItems.alluvialCassiterite::asStack).build());
-        MATERIALS = CREATIVE_MODE_TABS.register("materials", () -> CreativeModeTab.builder().withTabsBefore(MAIN.getId()).title(Component.translatable("itemGroup.metallurgica.materials")).icon(() -> MaterialHelper.getItem(MetMaterials.URANIUM.get(), FlagKey.INGOT).getDefaultInstance()).build());
+        MATERIALS = CREATIVE_MODE_TABS.register("materials", () -> CreativeModeTab.builder().withTabsBefore(MAIN.getId()).title(Component.translatable("itemGroup.metallurgica.materials")).icon(() -> MaterialHelpers.getItem(MetalMaterials.Uranium, RutileFlagKeys.INGOT).getDefaultInstance()).build());
     }
 }

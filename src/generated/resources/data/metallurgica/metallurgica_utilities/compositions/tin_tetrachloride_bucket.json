@@ -5,7 +5,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:tin"
+          "element": "rutile:tin"
         }
       ]
     },
@@ -14,7 +14,7 @@
       "elements": [
         {
           "amount": 4,
-          "element": "metallurgica:chlorine"
+          "element": "rutile:chlorine"
         }
       ]
     }

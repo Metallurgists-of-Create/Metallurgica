@@ -1,15 +1,19 @@
 package dev.metallurgists.metallurgica.foundation.ponder;
 
 import dev.metallurgists.metallurgica.Metallurgica;
+import dev.metallurgists.metallurgica.compat.rutile.flags.MetallurgicaFlagKeys;
+import dev.metallurgists.metallurgica.compat.rutile.materials.MetallurgicaMaterials;
 import dev.metallurgists.metallurgica.infastructure.material.registry.flags.FlagKey;
 import dev.metallurgists.metallurgica.infastructure.material.MaterialHelper;
 import dev.metallurgists.metallurgica.registry.MetallurgicaBlocks;
 import dev.metallurgists.metallurgica.registry.MetallurgicaItems;
 import dev.metallurgists.metallurgica.registry.material.MetMaterials;
 import com.tterrag.registrate.util.entry.RegistryEntry;
+import dev.metallurgists.rutile.util.helpers.MaterialHelpers;
 import net.createmod.catnip.platform.CatnipServices;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 
 public class MetallurgicaPonderTags {
@@ -33,7 +37,7 @@ public class MetallurgicaPonderTags {
 
         helper.registerTag(MINERALS)
                 .addToIndex()
-                .item(MaterialHelper.getItem(MetMaterials.CASSITERITE.get(), FlagKey.MINERAL), true, false)
+                .item(Items.GRANITE, true, false)
                 .title("Minerals")
                 .description("Ores, Minerals and how to use them")
                 .register();

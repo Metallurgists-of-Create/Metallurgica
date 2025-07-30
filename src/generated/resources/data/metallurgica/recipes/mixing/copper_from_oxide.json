@@ -11,11 +11,11 @@
   ],
   "results": [
     {
-      "item": "metallurgica:copper_rubble"
+      "item": "rutile:copper_rubble"
     },
     {
       "chance": 0.05,
-      "item": "metallurgica:copper_rubble"
+      "item": "rutile:copper_rubble"
     },
     {
       "amount": 90,

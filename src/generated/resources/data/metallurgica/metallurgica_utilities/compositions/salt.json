@@ -5,7 +5,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:sodium"
+          "element": "rutile:sodium"
         }
       ]
     },
@@ -14,7 +14,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:chlorine"
+          "element": "rutile:chlorine"
         }
       ]
     }

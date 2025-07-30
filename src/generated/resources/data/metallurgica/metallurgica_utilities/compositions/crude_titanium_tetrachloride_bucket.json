@@ -5,11 +5,11 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:iron"
+          "element": "rutile:iron"
         },
         {
           "amount": 1,
-          "element": "metallurgica:chlorine"
+          "element": "rutile:chlorine"
         }
       ]
     },
@@ -18,11 +18,11 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:titanium"
+          "element": "rutile:titanium"
         },
         {
           "amount": 4,
-          "element": "metallurgica:chlorine"
+          "element": "rutile:chlorine"
         }
       ]
     },
@@ -31,11 +31,11 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:tin"
+          "element": "rutile:tin"
         },
         {
           "amount": 4,
-          "element": "metallurgica:chlorine"
+          "element": "rutile:chlorine"
         }
       ]
     },
@@ -44,11 +44,11 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:silicon"
+          "element": "rutile:silicon"
         },
         {
           "amount": 4,
-          "element": "metallurgica:chlorine"
+          "element": "rutile:chlorine"
         }
       ]
     }

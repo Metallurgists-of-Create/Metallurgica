@@ -29,6 +29,8 @@ import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.ChunkEvent;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
@@ -165,6 +167,16 @@ public class CommonEvents {
     @SubscribeEvent
     public static void registerCommands(RegisterCommandsEvent event) {
         MetallurgicaCommands.register(event.getDispatcher(), event.getBuildContext());
+    }
+
+    @SubscribeEvent
+    public void onServerStart(ServerAboutToStartEvent event) {
+        Metallurgica.LOGGER.info("Thanks for using Metallurgica! Expect a severe lack of ores in your world :3");
+        TemperatureHandler.generateMap(event.getServer());
+    }
+    @SubscribeEvent
+    public void onServerStarting(ServerStartingEvent event) {
+        Metallurgica.LOGGER.info("Double checking our cool little ore frequency thingy :3");
     }
 
     @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)

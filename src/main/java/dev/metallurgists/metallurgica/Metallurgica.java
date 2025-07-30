@@ -1,6 +1,8 @@
 package dev.metallurgists.metallurgica;
 
 import dev.metallurgists.metallurgica.compat.cbc.BigCannonsCompat;
+import dev.metallurgists.metallurgica.compat.rutile.MetallurgicaRutilePlugin;
+import dev.metallurgists.metallurgica.compat.rutile.materials.*;
 import dev.metallurgists.metallurgica.content.fluids.types.open_ended_pipe.OpenEndedPipeEffects;
 import dev.metallurgists.metallurgica.events.CommonEvents;
 import dev.metallurgists.metallurgica.experimental.ExperimentalEvents;
@@ -11,7 +13,6 @@ import dev.metallurgists.metallurgica.foundation.worldgen.MetallurgicaFeatures;
 import dev.metallurgists.metallurgica.foundation.worldgen.MetallurgicaPlacementModifiers;
 import dev.metallurgists.metallurgica.foundation.temperature.server.TemperatureHandler;
 import dev.metallurgists.metallurgica.registry.*;
-import dev.metallurgists.metallurgica.registry.material.*;
 import dev.metallurgists.metallurgica.registry.misc.MetallurgicaElements;
 import dev.metallurgists.metallurgica.registry.misc.MetallurgicaRegistries;
 import dev.metallurgists.metallurgica.registry.misc.MetallurgicaSpecialRecipes;
@@ -24,6 +25,11 @@ import com.mojang.serialization.Codec;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipModifier;
+import dev.metallurgists.rutile.api.material.events.MaterialEvent;
+import dev.metallurgists.rutile.api.material.events.MaterialRegistryEvent;
+import dev.metallurgists.rutile.api.material.events.PostMaterialEvent;
+import dev.metallurgists.rutile.api.registry.RutileAPI;
+import dev.metallurgists.rutile.api.registry.material.MaterialRegistry;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
@@ -60,7 +66,8 @@ public class Metallurgica
     
     
     public static final MetallurgicaRegistrate registrate = MetallurgicaRegistrate.create(ID);
-    
+    public static MaterialRegistry MATERIAL_REGISTRY;
+
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting()
             .disableHtmlEscaping()
             .create();
@@ -75,44 +82,43 @@ public class Metallurgica
     
     public Metallurgica() {
         ModLoadingContext modLoadingContext = ModLoadingContext.get();
-        IEventBus modEventBus = FMLJavaModLoadingContext.get()
-                .getModEventBus();
 
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
+        var bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.register(this);
 
-        registrate.registerEventListeners(modEventBus);
+        registrate.registerEventListeners(bus);
         MetallurgicaRegistries.register();
-        MetallurgicaElements.register();
         //BIOME_MODIFIERS.register(modEventBus);
-        initMaterials(modEventBus);
-        MetallurgicaLootModifiers.LOOT_MODIFIERS.register(modEventBus);
-        MCreativeTabs.register(modEventBus);
+        //initMaterials(modEventBus);
+        MetallurgicaLootModifiers.LOOT_MODIFIERS.register(bus);
+        MCreativeTabs.register(bus);
         MetallurgicaBlockEntities.register();
         //modEventBus.addGenericListener(Conductor.class, MetallurgicaConductors::register);
         MetallurgicaConductors.register();
         MetallurgicaBlocks.register();
         MetallurgicaItems.register();
-        MetallurgicaSpecialRecipes.register(modEventBus);
+        MetallurgicaSpecialRecipes.register(bus);
         MetallurgicaFluids.register();
-        MetallurgicaEffects.register(modEventBus);
-        MetallurgicaRecipeTypes.register(modEventBus);
+        MetallurgicaEffects.register(bus);
+        MetallurgicaRecipeTypes.register(bus);
         MetallurgicaPackets.registerPackets();
         MetallurgicaOreFeatureConfigEntries.init();
-        MetallurgicaFeatures.register(modEventBus);
-        MetallurgicaPlacementModifiers.register(modEventBus);
+        MetallurgicaFeatures.register(bus);
+        MetallurgicaPlacementModifiers.register(bus);
         MetallurgicaEntityTypes.register();
 
         MetallurgicaConfigs.register(modLoadingContext);
 
         MinecraftForge.EVENT_BUS.register(new EventHandler());
         MinecraftForge.EVENT_BUS.register(new CommonEvents());
-        
-        modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(Metallurgica::init);
-        modEventBus.addListener(EventPriority.LOWEST, MetallurgicaDatagen::gatherData);
+
+        bus.addListener(this::commonSetup);
+        bus.addListener(Metallurgica::init);
+        bus.addListener(EventPriority.LOWEST, MetallurgicaDatagen::gatherData);
         DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> MetallurgicaClient::new);
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MetallurgicaClient.onCtorClient(modEventBus, forgeEventBus));
-        modEventBus.addListener(MCreativeTabs::addCreative);
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MetallurgicaClient.onCtorClient(bus, forgeEventBus));
+        bus.addListener(MCreativeTabs::addCreative);
         MinecraftForge.EVENT_BUS.register(this);
     }
     
@@ -124,34 +130,33 @@ public class Metallurgica
         MinecraftForge.EVENT_BUS.register(new ExperimentalEvents());
     };
 
-    public static void initMaterials(IEventBus modEventBus) {
-        MetalMaterials.register();
-        NonMetalMaterials.register();
+    @SubscribeEvent
+    public void registerMaterialRegistry(MaterialRegistryEvent event) {
+        MATERIAL_REGISTRY = RutileAPI.materialManager.createRegistry(Metallurgica.ID);
+    }
+
+    @SubscribeEvent
+    public void registerMaterials(MaterialEvent event) {
         AlloyMaterials.register();
-        MineralMaterials.register();
+        NonMetalMaterials.register();
         CompoundMaterials.register();
-        MetMaterials.register();
+        MineralMaterials.register();
+        MetalMaterials.register();
+    }
+
+    @SubscribeEvent
+    public void modifyMaterials(PostMaterialEvent event) {
+        AlloyMaterials.modify();
+        NonMetalMaterials.modify();
+        CompoundMaterials.modify();
+        MineralMaterials.modify();
+        MetalMaterials.modify();
     }
     
     private void commonSetup(final FMLCommonSetupEvent event) {
         LOGGER.info("HELLO FROM COMMON SETUP");
     }
-    
-    @SubscribeEvent
-    public void onServerStart(ServerAboutToStartEvent event)
-    {
-        LOGGER.info("Thanks for using Metallurgica! Expect a severe lack of ores in your world :3");
-        TemperatureHandler.generateMap(event.getServer());
-        //if (AllOreFeatureConfigEntries.ZINC_ORE != null)
-        //    AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
-    }
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event)
-    {
-        LOGGER.info("Double checking our cool little ore frequency thingy :3");
-        //if (AllOreFeatureConfigEntries.ZINC_ORE != null)
-        //    AllOreFeatureConfigEntries.ZINC_ORE.frequency.set(0.0);
-    }
+
 
     public static boolean isClientThread() {
         return isClientSide() && Minecraft.getInstance().isSameThread();

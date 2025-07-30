@@ -5,7 +5,7 @@
       "elements": [
         {
           "amount": 2,
-          "element": "metallurgica:aluminum"
+          "element": "rutile:aluminum"
         }
       ]
     },
@@ -14,7 +14,7 @@
       "elements": [
         {
           "amount": 3,
-          "element": "metallurgica:oxygen"
+          "element": "rutile:oxygen"
         }
       ]
     }

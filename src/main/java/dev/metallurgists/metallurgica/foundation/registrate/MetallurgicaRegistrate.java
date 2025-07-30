@@ -1,20 +1,15 @@
 package dev.metallurgists.metallurgica.foundation.registrate;
 
+import com.tterrag.registrate.util.OneTimeEventReceiver;
 import dev.metallurgists.metallurgica.Metallurgica;
+import dev.metallurgists.metallurgica.compat.rutile.flags.objects.MoltenMetalFluid;
+import dev.metallurgists.metallurgica.compat.rutile.flags.objects.VirtualMaterialFluid;
 import dev.metallurgists.metallurgica.content.fluids.types.Acid;
 import dev.metallurgists.metallurgica.content.fluids.types.TransparentTintedFluidType;
-import dev.metallurgists.metallurgica.foundation.fluid.MaterialFluidType;
-import dev.metallurgists.metallurgica.foundation.fluid.MoltenMetalFluid;
-import dev.metallurgists.metallurgica.foundation.fluid.VirtualMaterialFluid;
 import dev.metallurgists.metallurgica.foundation.item.AlloyItem;
 import com.drmangotea.tfmg.content.electricity.connection.cable_type.CableType;
 import com.drmangotea.tfmg.content.electricity.connection.cable_type.CableTypeBuilder;
-import dev.metallurgists.metallurgica.infastructure.material.Material;
 import dev.metallurgists.metallurgica.foundation.item.MetallurgicaItem;
-import dev.metallurgists.metallurgica.infastructure.element.Element;
-import dev.metallurgists.metallurgica.infastructure.element.ElementBuilder;
-import dev.metallurgists.metallurgica.infastructure.material.MaterialBuilder;
-import dev.metallurgists.metallurgica.infastructure.material.registry.flags.base.interfaces.IFluidRegistry;
 import dev.metallurgists.metallurgica.registry.MetallurgicaSpriteShifts;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
@@ -35,6 +30,10 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import dev.metallurgists.rutile.api.material.base.Material;
+import dev.metallurgists.rutile.api.material.flag.types.IFluidRegistry;
+import dev.metallurgists.rutile.api.material.registry.fluid.MaterialFluidType;
+import dev.metallurgists.rutile.mixin.registrate.AbstractRegistrateAccessor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
@@ -44,24 +43,21 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.registries.RegisterEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
 
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class MetallurgicaRegistrate extends CreateRegistrate {
-    /**
-     * A list of all compositions that have been registered.
-     * <p>
-     * This is used to generate the default lang file and tooltips.
-     * * <p>
-     * The key is the name of the material, the value is the element composition.
-     */
-    public static final List<String> COMP_MOD_BLACKLIST = new ArrayList<>();
 
     /**
      * Construct a new Registrate for the given mod ID.
@@ -70,7 +66,6 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
      */
     protected MetallurgicaRegistrate(String modid) {
         super(modid);
-        COMP_MOD_BLACKLIST.add("metallurgica");
     }
 
     // UTIL
@@ -89,12 +84,34 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         }
         return builder.toString();
     }
-    
+
     public static MetallurgicaRegistrate create(String modid) {
         return new MetallurgicaRegistrate(modid);
     }
-    
+    private final AtomicBoolean registered = new AtomicBoolean(false);
 
+    @Override
+    public MetallurgicaRegistrate registerEventListeners(IEventBus bus) {
+        if (!registered.getAndSet(true)) {
+            // recreate the super method so we can register the event listener with LOW priority.
+            Consumer<RegisterEvent> onRegister = this::onRegister;
+            Consumer<RegisterEvent> onRegisterLate = this::onRegisterLate;
+            bus.addListener(EventPriority.LOW, onRegister);
+            bus.addListener(EventPriority.LOWEST, onRegisterLate);
+
+            // Fired multiple times when ever tabs need contents rebuilt (changing op tab perms for example)
+            bus.addListener(this::onBuildCreativeModeTabContents);
+            // Register events fire multiple times, so clean them up on common setup
+            OneTimeEventReceiver.addModListener(this, FMLCommonSetupEvent.class, $ -> {
+                OneTimeEventReceiver.unregister(this, onRegister, RegisterEvent.class);
+                OneTimeEventReceiver.unregister(this, onRegisterLate, RegisterEvent.class);
+            });
+            if (((AbstractRegistrateAccessor) this).getDoDatagen().get()) {
+                OneTimeEventReceiver.addModListener(this, GatherDataEvent.class, this::onData);
+            }
+        }
+        return this;
+    }
 
     //FLUIDS
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualDust(String name, int color) {
@@ -102,7 +119,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         ResourceLocation flow = Metallurgica.asResource("fluid/dust_flow");
         return tintedVirtualFluid(name, color, still, flow);
     }
-    
+
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualFluid(String name, int color) {
         return tintedVirtualFluid(name, color, Metallurgica.asResource("fluid/thin_fluid_still"), Metallurgica.asResource("fluid/thin_fluid_flow"));
     }
@@ -110,7 +127,7 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualFluid(String name, int color, String textureType) {
         return tintedVirtualFluid(name, color, Metallurgica.asResource("fluid/"+textureType+"_still"), Metallurgica.asResource("fluid/"+textureType+"_flow"));
     }
-    
+
     public FluidBuilder<VirtualFluid, CreateRegistrate> tintedVirtualFluid(String name, int color, ResourceLocation still, ResourceLocation flow) {
         return virtualFluid(name, still, flow, TransparentTintedFluidType.create(color), VirtualFluid::createSource, VirtualFluid::createFlowing);
     }
@@ -131,13 +148,13 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
                 (p) -> MoltenMetalFluid.createSource(p, material, flag).meltingPoint(moltenTemperature),
                 (p) -> MoltenMetalFluid.createFlowing(p, material, flag).meltingPoint(moltenTemperature)));
     }
-    
+
     public FluidBuilder<ForgeFlowingFluid.Flowing, CreateRegistrate> tintedFluid(String name, int color) {
         ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
         return fluid(name, still, flow, TransparentTintedFluidType.create(color), ForgeFlowingFluid.Flowing::new);
     }
-    
+
     public FluidBuilder<Acid, CreateRegistrate> acid(String name, int color, float acidity) {
         ResourceLocation still = Metallurgica.asResource("fluid/thin_fluid_still");
         ResourceLocation flow = Metallurgica.asResource("fluid/thin_fluid_flow");
@@ -164,22 +181,6 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return builder.register();
     }
 
-    public <T extends Element> ElementBuilder<T, MetallurgicaRegistrate> element(String symbol, NonNullFunction<Element.Properties, T> factory) {
-        return element((MetallurgicaRegistrate) self(), symbol, factory);
-    }
-
-    public <T extends Element> ElementBuilder<T, MetallurgicaRegistrate> element(String name, String symbol, NonNullFunction<Element.Properties, T> factory) {
-        return element((MetallurgicaRegistrate) self(), name, symbol, factory);
-    }
-
-    public <T extends Element, P> ElementBuilder<T, P> element(P parent, String symbol, NonNullFunction<Element.Properties, T> factory) {
-        return element(parent, currentName(), symbol, factory);
-    }
-
-    public <T extends Element, P> ElementBuilder<T, P> element(P parent, String name, String symbol, NonNullFunction<Element.Properties, T> factory) {
-        return entry(name, callback -> ElementBuilder.create(this, parent, name, symbol, callback, factory));
-    }
-
     public <T extends CableType> CableTypeBuilder<T, MetallurgicaRegistrate> cableType(NonNullFunction<CableType.Properties, T> factory) {
         return cableType((MetallurgicaRegistrate) self(), factory);
     }
@@ -196,33 +197,17 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
         return entry(name, callback -> CableTypeBuilder.create(this, parent, name, callback, factory));
     }
 
-    public <T extends Material> MaterialBuilder<T, MetallurgicaRegistrate> material(NonNullFunction<Material.Builder, T> factory) {
-        return material((MetallurgicaRegistrate) self(), factory);
-    }
-
-    public <T extends Material> MaterialBuilder<T, MetallurgicaRegistrate> material(String name, NonNullFunction<Material.Builder, T> factory) {
-        return material((MetallurgicaRegistrate) self(), name, factory);
-    }
-
-    public <T extends Material, P> MaterialBuilder<T, P> material(P parent, NonNullFunction<Material.Builder, T> factory) {
-        return material(parent, currentName(), factory);
-    }
-
-    public <T extends Material, P> MaterialBuilder<T, P> material(P parent, String name, NonNullFunction<Material.Builder, T> factory) {
-        return entry(name, callback -> MaterialBuilder.create(this, parent, name, callback, factory));
-    }
-    
     public enum Dimension {
         OVERWORLD(BiomeTags.IS_OVERWORLD),
         NETHER(BiomeTags.IS_NETHER),
         END(BiomeTags.IS_END);
-        
+
         public final TagKey<Biome> biomeTag;
-        
+
         Dimension(TagKey<Biome> biomeTag) {
             this.biomeTag = biomeTag;
         }
-        
+
         public TagKey<Biome> biomeTag() {
             return biomeTag;
         }

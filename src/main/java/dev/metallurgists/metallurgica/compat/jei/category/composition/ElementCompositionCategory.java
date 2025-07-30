@@ -1,16 +1,17 @@
 package dev.metallurgists.metallurgica.compat.jei.category.composition;
 
 import dev.metallurgists.metallurgica.compat.jei.MetallurgicaJeiConstants;
-import dev.metallurgists.metallurgica.foundation.data.custom.composition.tooltip.CompositionManager;
-import dev.metallurgists.metallurgica.foundation.data.custom.composition.tooltip.MaterialCompositionManager;
-import dev.metallurgists.metallurgica.infastructure.element.Element;
-import dev.metallurgists.metallurgica.infastructure.element.data.ElementData;
-import dev.metallurgists.metallurgica.infastructure.element.data.SubComposition;
-import dev.metallurgists.metallurgica.registry.misc.MetallurgicaElements;
-import dev.metallurgists.metallurgica.registry.misc.MetallurgicaRegistries;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.utility.CreateLang;
+import dev.metallurgists.rutile.api.composition.ElementData;
+import dev.metallurgists.rutile.api.composition.SubComposition;
+import dev.metallurgists.rutile.api.composition.element.Element;
+import dev.metallurgists.rutile.api.composition.tooltip.CompositionManager;
+import dev.metallurgists.rutile.api.composition.tooltip.MaterialCompositionManager;
+import dev.metallurgists.rutile.api.registry.RutileRegistries;
+import dev.metallurgists.rutile.compat.jei.RutileJeiConstants;
+import dev.metallurgists.rutile.registry.RutileElements;
 import mezz.jei.api.gui.builder.IIngredientAcceptor;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
@@ -108,7 +109,7 @@ public class ElementCompositionCategory extends CreateRecipeCategory<ElementComp
         int totalElementsAmount = 0;
         for (SubComposition subComposition : subCompositions) {
             for (ElementData elementData : subComposition.getElements()) {
-                Element element = MetallurgicaRegistries.registeredElements.getOrDefault(elementData.element(), MetallurgicaElements.NULL.get());
+                Element element = RutileRegistries.ELEMENTS.getOrDefault(elementData.element(), RutileElements.NULL);
                 int amount = elementData.amount();
                 elementCounts.put(element, elementCounts.getOrDefault(element, 0) + amount);
                 totalElementsAmount += amount;
@@ -119,7 +120,7 @@ public class ElementCompositionCategory extends CreateRecipeCategory<ElementComp
         layoutOutput(elementCounts, totalElementsAmount).forEach(layoutEntry -> builder
                 .addSlot(RecipeIngredientRole.OUTPUT, (xOffset) + layoutEntry.posX() + 1, yOffset + layoutEntry.posY() + 1)
                 .setBackground(asDrawable(AllGuiTextures.JEI_SLOT), -1, -1)
-                .addIngredient(MetallurgicaJeiConstants.ELEMENT, layoutEntry.output)
+                .addIngredient(RutileJeiConstants.ELEMENT, layoutEntry.output)
                 .addRichTooltipCallback(addPercentageTooltipCallback(layoutEntry.percentage))
         );
     }

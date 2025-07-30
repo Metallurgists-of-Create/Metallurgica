@@ -182,10 +182,10 @@ public class MetallurgicaFluids {
     }
 
     public static void register() {
-        MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MATERIALS);
-        MetMaterialFluids.generateMaterialFluids(materialRegistrate);
-        MetMaterialFluids.MATERIAL_FLUIDS = MetMaterialFluids.MATERIAL_FLUIDS_BUILDER.build();
-
-        MetMaterialFluids.MATERIAL_FLUIDS_BUILDER = null;
+        //MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MATERIALS);
+        //MetMaterialFluids.generateMaterialFluids(materialRegistrate);
+        //MetMaterialFluids.MATERIAL_FLUIDS = MetMaterialFluids.MATERIAL_FLUIDS_BUILDER.build();
+//
+        //MetMaterialFluids.MATERIAL_FLUIDS_BUILDER = null;
     }
 }

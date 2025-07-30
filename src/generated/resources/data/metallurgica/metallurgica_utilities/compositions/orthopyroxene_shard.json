@@ -5,15 +5,15 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:magnesium"
+          "element": "rutile:magnesium"
         },
         {
           "amount": 1,
-          "element": "metallurgica:iron"
+          "element": "rutile:iron"
         },
         {
           "amount": 1,
-          "element": "metallurgica:calcium"
+          "element": "rutile:calcium"
         }
       ]
     },
@@ -22,15 +22,15 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:magnesium"
+          "element": "rutile:magnesium"
         },
         {
           "amount": 1,
-          "element": "metallurgica:iron"
+          "element": "rutile:iron"
         },
         {
           "amount": 1,
-          "element": "metallurgica:aluminum"
+          "element": "rutile:aluminum"
         }
       ]
     },
@@ -39,11 +39,11 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:silicon"
+          "element": "rutile:silicon"
         },
         {
           "amount": 1,
-          "element": "metallurgica:aluminum"
+          "element": "rutile:aluminum"
         }
       ]
     },
@@ -52,7 +52,7 @@
       "elements": [
         {
           "amount": 6,
-          "element": "metallurgica:oxygen"
+          "element": "rutile:oxygen"
         }
       ]
     }

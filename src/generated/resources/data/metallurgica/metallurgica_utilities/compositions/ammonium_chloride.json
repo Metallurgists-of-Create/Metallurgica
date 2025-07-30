@@ -5,7 +5,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:nitrogen"
+          "element": "rutile:nitrogen"
         }
       ]
     },
@@ -14,7 +14,7 @@
       "elements": [
         {
           "amount": 4,
-          "element": "metallurgica:hydrogen"
+          "element": "rutile:hydrogen"
         }
       ]
     },
@@ -23,7 +23,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:chlorine"
+          "element": "rutile:chlorine"
         }
       ]
     }

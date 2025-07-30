@@ -1,5 +1,6 @@
 package dev.metallurgists.metallurgica.registry;
 
+import dev.metallurgists.metallurgica.compat.rutile.RutileBlockEntities;
 import dev.metallurgists.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlockEntity;
 import dev.metallurgists.metallurgica.content.fluids.channel.channel_depot.ChannelDepotRenderer;
 import dev.metallurgists.metallurgica.content.fluids.fluid_shower.FluidShowerBlockEntity;
@@ -133,6 +134,6 @@ public class MetallurgicaBlockEntities {
                     .validBlocks(MetallurgicaBlocks.charredLogPile).register();
 
     public static void register() {
-        MetMaterialBlockEntities.register(registrate().getModEventBus());
+        RutileBlockEntities.register(registrate().getModEventBus());
     }
 }

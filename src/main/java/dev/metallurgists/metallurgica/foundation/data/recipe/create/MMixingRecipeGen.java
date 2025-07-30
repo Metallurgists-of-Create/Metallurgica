@@ -1,6 +1,10 @@
 package dev.metallurgists.metallurgica.foundation.data.recipe.create;
 
 import dev.metallurgists.metallurgica.Metallurgica;
+import dev.metallurgists.metallurgica.compat.rutile.flags.MetallurgicaFlagKeys;
+import dev.metallurgists.metallurgica.compat.rutile.materials.CompoundMaterials;
+import dev.metallurgists.metallurgica.compat.rutile.materials.MetallurgicaMaterials;
+import dev.metallurgists.metallurgica.compat.rutile.materials.MineralMaterials;
 import dev.metallurgists.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
 import dev.metallurgists.metallurgica.infastructure.material.registry.flags.FlagKey;
 import dev.metallurgists.metallurgica.infastructure.material.MaterialHelper;
@@ -10,6 +14,9 @@ import dev.metallurgists.metallurgica.registry.material.MetMaterials;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
+import dev.metallurgists.rutile.registry.RutileFlagKeys;
+import dev.metallurgists.rutile.registry.RutileMaterials;
+import dev.metallurgists.rutile.util.helpers.MaterialHelpers;
 import net.minecraft.data.DataGenerator;
 
 public class MMixingRecipeGen extends MProcessingRecipeGen {
@@ -64,7 +71,7 @@ public class MMixingRecipeGen extends MProcessingRecipeGen {
             .requiresHeat(HeatCondition.HEATED)),
     
     copperOxide = create(Metallurgica.asResource("copper_oxide"), b -> b
-            .require(MaterialHelper.getItem(MetMaterials.MALACHITE.get(), FlagKey.MINERAL))
+            .require(MaterialHelpers.getItem(MineralMaterials.Malachite, MetallurgicaFlagKeys.MINERAL))
             .require(I.cokeDust())
             .require(I.cokeDust())
             .output(F.carbonDioxide(), 90)
@@ -76,13 +83,13 @@ public class MMixingRecipeGen extends MProcessingRecipeGen {
             .require(I.copperOxide())
             .require(I.cokeDust())
             .output(F.carbonDioxide(), 90)
-            .output(MaterialHelper.getItem(MetMaterials.COPPER.get(), FlagKey.RUBBLE), 1)
-            .output(0.05f, MaterialHelper.getItem(MetMaterials.COPPER.get(), FlagKey.RUBBLE), 1)
+            .output(MaterialHelpers.getItem(RutileMaterials.Copper, MetallurgicaFlagKeys.RUBBLE), 1)
+            .output(0.05f, MaterialHelpers.getItem(RutileMaterials.Copper, MetallurgicaFlagKeys.RUBBLE), 1)
             .requiresHeat(HeatCondition.HEATED)),
     
     titaniumTetrachloride = create(Metallurgica.asResource("titanium_tetrachloride"), b -> b
-            .require(MaterialHelper.getItem(MetMaterials.RUTILE.get(), FlagKey.DUST))
-            .require(MaterialHelper.getItem(MetMaterials.RUTILE.get(), FlagKey.DUST))
+            .require(MaterialHelpers.getItem(MineralMaterials.Rutile, RutileFlagKeys.DUST))
+            .require(MaterialHelpers.getItem(MineralMaterials.Rutile, RutileFlagKeys.DUST))
             .require(F.chlorine(), 500)
             .require(I.cokeDust())
             .require(I.cokeDust())
@@ -91,7 +98,7 @@ public class MMixingRecipeGen extends MProcessingRecipeGen {
             .requiresHeat(HeatCondition.SUPERHEATED)),
     
     magnesiumChloride = create(Metallurgica.asResource("magnesium_chloride"), b -> b
-            .require(MaterialHelper.getItem(MetMaterials.MAGNESIUM_OXIDE.get(), FlagKey.DUST))
+            .require(MaterialHelpers.getItem(CompoundMaterials.MagnesiumOxide, RutileFlagKeys.DUST))
             .require(MetallurgicaFluids.hydrochloricAcid.get(), 100)
             .output(MetallurgicaFluids.magnesiumChloride.get(), 50)
             .requiresHeat(HeatCondition.HEATED)),

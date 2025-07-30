@@ -132,13 +132,8 @@ public class MetallurgicaElements {
             NETHERIUM = createElement("netherium", "Nt", 0xff333756);
 
 
-
-    private static ElementEntry<Element> createElement(String name, String symbol) {
-        return registrate.element(name, symbol, Element::new).register();
-    }
-
     private static ElementEntry<Element> createElement(String name, String symbol, int color) {
-        return registrate.element(name, symbol, Element::new).properties(p -> p.color(color)).register();
+        return null;//registrate.element(name, symbol, Element::new).properties(p -> p.color(color)).register();
     }
 
 

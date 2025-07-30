@@ -2,6 +2,10 @@ package dev.metallurgists.metallurgica.foundation.data.recipe.tfmg;
 
 import com.drmangotea.tfmg.datagen.recipes.builder.VatMachineRecipeBuilder;
 import com.drmangotea.tfmg.registry.TFMGRecipeTypes;
+import dev.metallurgists.metallurgica.compat.rutile.flags.MetallurgicaFlagKeys;
+import dev.metallurgists.metallurgica.compat.rutile.materials.MetalMaterials;
+import dev.metallurgists.metallurgica.compat.rutile.materials.MetallurgicaMaterials;
+import dev.metallurgists.metallurgica.compat.rutile.materials.MineralMaterials;
 import dev.metallurgists.metallurgica.foundation.data.recipe.MProcessingRecipeGen;
 import dev.metallurgists.metallurgica.infastructure.material.MaterialHelper;
 import dev.metallurgists.metallurgica.infastructure.material.registry.flags.FlagKey;
@@ -10,6 +14,7 @@ import dev.metallurgists.metallurgica.registry.MetallurgicaItems;
 import dev.metallurgists.metallurgica.registry.material.MetMaterials;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
+import dev.metallurgists.rutile.util.helpers.MaterialHelpers;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluids;
@@ -40,14 +45,14 @@ public class VatGen extends MProcessingRecipeGen {
 
     magnesiumChloride = createVatRecipe("magnesium_chloride", (b) -> (VatMachineRecipeBuilder)b
             .require(MetallurgicaFluids.magnesiumChloride.get(), 500)
-            .output(MaterialHelper.getFluid(MetMaterials.MAGNESIUM.get(), FlagKey.MOLTEN), 300)
+            .output(MaterialHelpers.getFluid(MetalMaterials.Magnesium, MetallurgicaFlagKeys.MOLTEN), 300)
             .output(F.chlorine(), 200)
             .requiresHeat(HeatCondition.HEATED)
             .duration(600), this.electrolysis()),
 
     sodiumOrthovanadate = createVatRecipe("vanadium_processing/sodium_othrovanadate", (b) -> (VatMachineRecipeBuilder)b
             .require(Ingredient.of(I.salt(), MetallurgicaItems.sodiumCarbonate))
-            .require(MaterialHelper.getItem(MetMaterials.VANADINITE.get(), FlagKey.RUBBLE))
+            .require(MaterialHelpers.getItem(MineralMaterials.Vanadinite, MetallurgicaFlagKeys.RUBBLE))
             .output(MetallurgicaItems.sodiumOrthovanadate)
             .requiresHeat(HeatCondition.SUPERHEATED)
             .duration(400), this.mixing()),
@@ -80,7 +85,7 @@ public class VatGen extends MProcessingRecipeGen {
             .require(MetallurgicaItems.calciumPowder)
             .require(MetallurgicaItems.calciumPowder)
             .require(MetallurgicaItems.calciumPowder)
-            .output(MaterialHelper.getFluid(MetMaterials.VANADIUM.get(), FlagKey.MOLTEN), MaterialHelper.FluidValues.ingots(2))
+            .output(MaterialHelpers.getFluid(MetalMaterials.Vanadium, MetallurgicaFlagKeys.MOLTEN), MaterialHelper.FluidValues.ingots(2))
             .output(MetallurgicaItems.calciumOxide, 5)
             .duration(600), this.electrolysis())
 

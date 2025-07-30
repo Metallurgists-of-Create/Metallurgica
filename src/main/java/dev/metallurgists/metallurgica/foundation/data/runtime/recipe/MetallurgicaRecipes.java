@@ -32,8 +32,6 @@ public class MetallurgicaRecipes {
             PressingRecipeHandler.run(consumer, material);
             SequencedAssemblyHandler.run(consumer, material);
             StorageRecipeHandler.run(consumer, material);
-            CrushingRecipeHandler.run(consumer, material);
-            ItemApplicationHandler.run(consumer, material);
 
             ScrappingHandler.run(consumer, material);
         }

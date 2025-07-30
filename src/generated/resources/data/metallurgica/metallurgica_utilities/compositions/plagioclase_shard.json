@@ -5,7 +5,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:sodium"
+          "element": "rutile:sodium"
         }
       ]
     },
@@ -14,7 +14,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:aluminum"
+          "element": "rutile:aluminum"
         }
       ]
     },
@@ -23,7 +23,7 @@
       "elements": [
         {
           "amount": 3,
-          "element": "metallurgica:silicon"
+          "element": "rutile:silicon"
         }
       ]
     },
@@ -32,7 +32,7 @@
       "elements": [
         {
           "amount": 8,
-          "element": "metallurgica:oxygen"
+          "element": "rutile:oxygen"
         }
       ]
     }

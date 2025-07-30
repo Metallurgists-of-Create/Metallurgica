@@ -114,10 +114,10 @@ public class MetallurgicaItems {
             .register();
 
     public static void register() {
-        MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MATERIALS);
-        MetMaterialItems.generateMaterialItems(materialRegistrate);
-        MetMaterialItems.MATERIAL_ITEMS = MetMaterialItems.MATERIAL_ITEMS_BUILDER.build();
-
-        MetMaterialItems.MATERIAL_ITEMS_BUILDER = null;
+        //MetallurgicaRegistrate materialRegistrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MATERIALS);
+        //MetMaterialItems.generateMaterialItems(materialRegistrate);
+        //MetMaterialItems.MATERIAL_ITEMS = MetMaterialItems.MATERIAL_ITEMS_BUILDER.build();
+//
+        //MetMaterialItems.MATERIAL_ITEMS_BUILDER = null;
     }
 }

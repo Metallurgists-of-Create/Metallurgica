@@ -1,12 +1,12 @@
 package dev.metallurgists.metallurgica.compat.jei.category.composition;
 
 import dev.metallurgists.metallurgica.Metallurgica;
-import dev.metallurgists.metallurgica.infastructure.material.Material;
-import dev.metallurgists.metallurgica.infastructure.material.MaterialHelper;
-import dev.metallurgists.metallurgica.infastructure.element.data.SubComposition;
 import dev.metallurgists.metallurgica.registry.MetallurgicaRecipeTypes;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
+import dev.metallurgists.rutile.api.composition.SubComposition;
+import dev.metallurgists.rutile.api.material.base.Material;
+import dev.metallurgists.rutile.util.helpers.MaterialHelpers;
 import lombok.Getter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -75,7 +75,7 @@ public class ElementCompositionRecipe extends ProcessingRecipe<RecipeWrapper> {
             Metallurgica.LOGGER.error("Material is null, cannot get all items for null material.");
             return new ArrayList<>();
         }
-        return MaterialHelper.getAllMaterialItemsForTooltips(material).stream().map(Item::getDefaultInstance).toList();
+        return MaterialHelpers.getAllMaterialItemsForTooltips(material).stream().map(Item::getDefaultInstance).toList();
     }
 
 

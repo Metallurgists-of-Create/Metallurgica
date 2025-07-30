@@ -5,7 +5,7 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:calcium"
+          "element": "rutile:calcium"
         }
       ]
     },
@@ -14,7 +14,7 @@
       "elements": [
         {
           "amount": 2,
-          "element": "metallurgica:fluorine"
+          "element": "rutile:fluorine"
         }
       ]
     }

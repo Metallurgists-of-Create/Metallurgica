@@ -5,7 +5,7 @@
       "elements": [
         {
           "amount": 7,
-          "element": "metallurgica:magnesium"
+          "element": "rutile:magnesium"
         }
       ]
     },
@@ -14,7 +14,7 @@
       "elements": [
         {
           "amount": 8,
-          "element": "metallurgica:silicon"
+          "element": "rutile:silicon"
         }
       ]
     },
@@ -23,7 +23,7 @@
       "elements": [
         {
           "amount": 22,
-          "element": "metallurgica:oxygen"
+          "element": "rutile:oxygen"
         }
       ]
     },
@@ -32,11 +32,11 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:oxygen"
+          "element": "rutile:oxygen"
         },
         {
           "amount": 1,
-          "element": "metallurgica:hydrogen"
+          "element": "rutile:hydrogen"
         }
       ]
     }

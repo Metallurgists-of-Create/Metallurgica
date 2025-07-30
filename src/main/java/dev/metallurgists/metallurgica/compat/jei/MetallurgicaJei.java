@@ -8,8 +8,6 @@ import dev.metallurgists.metallurgica.compat.jei.category.RecipeCategoryBuilder;
 import dev.metallurgists.metallurgica.compat.jei.category.reaction.fluid.FluidReactionCategory;
 import dev.metallurgists.metallurgica.compat.jei.category.scrapping.ScrappingCategory;
 import dev.metallurgists.metallurgica.compat.jei.category.shaking.ShakingCategory;
-import dev.metallurgists.metallurgica.compat.jei.custom.element.ElementIngredientHelper;
-import dev.metallurgists.metallurgica.compat.jei.custom.element.ElementIngredientRenderer;
 import dev.metallurgists.metallurgica.content.machines.shaking_table.ShakingRecipe;
 import dev.metallurgists.metallurgica.content.primitive.ceramic.ceramic_mixing_pot.CeramicMixingRecipe;
 import dev.metallurgists.metallurgica.infastructure.material.MaterialHelper;
@@ -19,15 +17,16 @@ import dev.metallurgists.metallurgica.registry.MetallurgicaFluids;
 import dev.metallurgists.metallurgica.registry.MetallurgicaItems;
 import dev.metallurgists.metallurgica.registry.MetallurgicaRecipeTypes;
 import dev.metallurgists.metallurgica.registry.material.MetMaterials;
-import dev.metallurgists.metallurgica.registry.misc.MetallurgicaRegistries;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.kinetics.crusher.CrushingRecipe;
+import dev.metallurgists.rutile.registry.RutileFlagKeys;
+import dev.metallurgists.rutile.registry.RutileMaterials;
+import dev.metallurgists.rutile.util.helpers.MaterialHelpers;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.forge.ForgeTypes;
-import mezz.jei.api.helpers.IColorHelper;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.*;
 import mezz.jei.api.runtime.IIngredientManager;
@@ -83,20 +82,6 @@ public class MetallurgicaJei implements IModPlugin {
     }
 
     @Override
-    public void registerIngredients(IModIngredientRegistration registration) {
-        IColorHelper colorHelper = registration.getColorHelper();
-        registration.register(MetallurgicaJeiConstants.ELEMENT, MetallurgicaRegistries.registeredElements.values(), new ElementIngredientHelper(colorHelper), new ElementIngredientRenderer(16));
-    }
-
-    @Override
-    public void registerIngredientAliases(IIngredientAliasRegistration registration) {
-        registration.addAliases(
-                MetallurgicaJeiConstants.ELEMENT,
-                MetallurgicaRegistries.registeredElements.values(),
-                "element");
-    }
-
-    @Override
     public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
         List<FluidStack> fluidIngredients = new ArrayList<>();
         fluidIngredients.add(new FluidStack(MetallurgicaFluids.preheatedAir.get().getSource(), FluidType.BUCKET_VOLUME));
@@ -119,7 +104,7 @@ public class MetallurgicaJei implements IModPlugin {
                 builder(CrushingRecipe.class)
                         .addTypedRecipes(AllRecipeTypes.CRUSHING)
                         .catalyst(AllBlocks.CRUSHING_WHEEL::get)
-                        .doubleItemIcon(AllBlocks.CRUSHING_WHEEL.get(), MaterialHelper.getItem(MetMaterials.COPPER.get(), FlagKey.DUST))
+                        .doubleItemIcon(AllBlocks.CRUSHING_WHEEL.get(), MaterialHelpers.getItem(RutileMaterials.Copper, RutileFlagKeys.DUST))
                         .emptyBackground(177, 100)
                         .build("scrapping", ScrappingCategory::new)
         );

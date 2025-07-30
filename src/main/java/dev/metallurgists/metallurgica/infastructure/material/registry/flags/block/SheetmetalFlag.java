@@ -78,7 +78,7 @@ public class SheetmetalFlag extends BlockFlag implements IHaveConnectedTextures,
 
     @Override
     public CTSpriteShiftEntry getSpriteShiftEntry(Material material) {
-        return MetallurgicaSpriteShifts.materialRectangle(material, getKey());
+        return null;//MetallurgicaSpriteShifts.materialRectangle(material, getKey());
     }
 
     @Override

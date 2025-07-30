@@ -98,7 +98,7 @@ public class CasingFlag extends BlockFlag implements IHaveConnectedTextures, IRe
 
     @Override
     public CTSpriteShiftEntry getSpriteShiftEntry(Material material) {
-        return MetallurgicaSpriteShifts.materialOmni(material, getKey());
+        return null;//MetallurgicaSpriteShifts.materialOmni(material, getKey());
     }
 
     @Override

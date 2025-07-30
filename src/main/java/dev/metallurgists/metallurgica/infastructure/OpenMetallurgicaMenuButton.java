@@ -1,9 +1,15 @@
 package dev.metallurgists.metallurgica.infastructure;
 
+import dev.metallurgists.metallurgica.compat.rutile.flags.MetallurgicaFlagKeys;
+import dev.metallurgists.metallurgica.compat.rutile.materials.MetallurgicaMaterials;
+import dev.metallurgists.metallurgica.compat.rutile.materials.MineralMaterials;
 import dev.metallurgists.metallurgica.foundation.config.MetallurgicaConfigs;
 import dev.metallurgists.metallurgica.infastructure.material.registry.flags.FlagKey;
 import dev.metallurgists.metallurgica.infastructure.material.MaterialHelper;
+import dev.metallurgists.metallurgica.registry.MetallurgicaBlocks;
+import dev.metallurgists.metallurgica.registry.MetallurgicaItems;
 import dev.metallurgists.metallurgica.registry.material.MetMaterials;
+import dev.metallurgists.rutile.util.helpers.MaterialHelpers;
 import net.createmod.catnip.config.ui.BaseConfigScreen;
 import net.createmod.catnip.gui.ScreenOpener;
 import net.minecraft.client.Minecraft;
@@ -41,7 +47,7 @@ public class OpenMetallurgicaMenuButton extends Button {
     }
 
     static {
-        ICON = MaterialHelper.getItem(MetMaterials.CASSITERITE.get(), FlagKey.MINERAL).getDefaultInstance();
+        ICON = MaterialHelpers.getItem(MineralMaterials.Cassiterite, MetallurgicaFlagKeys.MINERAL).getDefaultInstance();
     }
 
     @Override

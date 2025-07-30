@@ -19,7 +19,7 @@ public class MetallurgicaClient {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         MetallurgicaPartialModels.init();
-        MetMaterialPartialModels.clientInit();
+        //MetMaterialPartialModels.clientInit();
         
         modEventBus.register(this);
     }

@@ -1,12 +1,12 @@
 package dev.metallurgists.metallurgica.registry;
 
 import dev.metallurgists.metallurgica.Metallurgica;
-import dev.metallurgists.metallurgica.infastructure.material.Material;
-import dev.metallurgists.metallurgica.infastructure.material.registry.flags.FlagKey;
 import com.simibubi.create.foundation.block.connected.AllCTTypes;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.block.connected.CTSpriteShifter;
 import com.simibubi.create.foundation.block.connected.CTType;
+import dev.metallurgists.rutile.api.material.base.Material;
+import dev.metallurgists.rutile.api.material.flag.FlagKey;
 import net.createmod.catnip.render.SpriteShiftEntry;
 import net.createmod.catnip.render.SpriteShifter;
 import net.minecraft.resources.ResourceLocation;
@@ -64,8 +64,8 @@ public class MetallurgicaSpriteShifts {
 
     public static CTSpriteShiftEntry getMaterialCT(CTType type, Material material, FlagKey<?> flagKey) {
         return CTSpriteShifter.getCT(type,
-                new ResourceLocation(material.getNamespace(), "block/materials/" + material.getName() + "/" + flagKey.toString()),
-                new ResourceLocation(material.getNamespace(), "block/materials/" + material.getName() + "/" + flagKey + "_connected"));
+                new ResourceLocation(material.getNamespace(), "block/materials/" + material.getName() + "/" + flagKey.getId().getPath()),
+                new ResourceLocation(material.getNamespace(), "block/materials/" + material.getName() + "/" + flagKey.getId().getPath() + "_connected"));
     }
     
 }

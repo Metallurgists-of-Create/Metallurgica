@@ -36,8 +36,8 @@
       "item": "metallurgica:calcium_oxide"
     },
     {
-      "amount": 288,
-      "fluid": "metallurgica:molten_vanadium"
+      "amount": 0,
+      "fluid": "minecraft:empty"
     }
   ]
 }

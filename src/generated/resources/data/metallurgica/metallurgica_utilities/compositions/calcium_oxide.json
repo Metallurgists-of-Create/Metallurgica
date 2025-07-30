@@ -5,11 +5,11 @@
       "elements": [
         {
           "amount": 1,
-          "element": "metallurgica:calcium"
+          "element": "rutile:calcium"
         },
         {
           "amount": 1,
-          "element": "metallurgica:oxygen"
+          "element": "rutile:oxygen"
         }
       ]
     }

@@ -15,10 +15,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.simibubi.create.foundation.utility.FilesHelper;
 import com.tterrag.registrate.providers.ProviderType;
+import dev.metallurgists.rutile.api.composition.element.Element;
+import dev.metallurgists.rutile.api.registry.RutileRegistries;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 
@@ -62,8 +65,12 @@ public class MetallurgicaDatagen {
             provideDefaultLang("interface", langConsumer);
             provideDefaultLang("tooltips", langConsumer);
             provideDefaultLang("materials", langConsumer);
-            MetallurgicaRegistries.registeredElements.forEach((rl, e) -> {
-                provider.add(e.getOrCreateDescriptionId(), toEnglishName(rl.getPath()));
+            RutileRegistries.ELEMENTS.entries().forEach((entry) -> {
+                ResourceLocation key = entry.getKey();
+                Element element = entry.getValue();
+                if (key.getNamespace().equals("metallurgica")) {
+                    provider.add(element.getOrCreateDescriptionId(), toEnglishName(key.getPath()));
+                }
             });
             MetallurgicaAdvancements.provideLang(langConsumer);
             //MetallurgicaElements.provideElementLang(langConsumer);
