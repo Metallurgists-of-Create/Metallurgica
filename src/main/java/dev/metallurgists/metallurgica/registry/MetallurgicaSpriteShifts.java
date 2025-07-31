@@ -17,6 +17,11 @@ public class MetallurgicaSpriteShifts {
     public static final CTSpriteShiftEntry blastProofGlass = omni("blast_proof_glass");
     public static final CTSpriteShiftEntry directionalMetalBlock = horizontal("directional_metal_block");
 
+    public static final CTSpriteShiftEntry
+            hotPlateSide = getCT(AllCTTypes.RECTANGLE, "hot_plate_side"),
+            hotPlateTop = getCT(AllCTTypes.RECTANGLE, "hot_plate_top"),
+            hotPlateBottom = getCT(AllCTTypes.RECTANGLE, "hot_plate_bottom");
+
     public static CTSpriteShiftEntry omni(String name) {
         return getCT(AllCTTypes.OMNIDIRECTIONAL, name);
     }

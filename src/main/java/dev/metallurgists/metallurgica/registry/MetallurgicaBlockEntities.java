@@ -26,9 +26,12 @@ import dev.metallurgists.metallurgica.content.primitive.ceramic.ceramic_pot.Cera
 import dev.metallurgists.metallurgica.content.primitive.ceramic.ceramic_pot.CeramicPotRenderer;
 import dev.metallurgists.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlockEntity;
 import dev.metallurgists.metallurgica.content.temperature.DebugTempBlockEntity;
+import dev.metallurgists.metallurgica.content.temperature.hot_plate.HotPlateBlockEntity;
+import dev.metallurgists.metallurgica.content.temperature.hot_plate.HotPlateRenderer;
 import dev.metallurgists.metallurgica.foundation.multiblock.FluidOutputBlockEntity;
 import dev.metallurgists.metallurgica.registry.material.init.MetMaterialBlockEntities;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import static dev.metallurgists.metallurgica.Metallurgica.registrate;
 
@@ -131,6 +134,11 @@ public class MetallurgicaBlockEntities {
     public static final BlockEntityEntry<CharredLogPileBlockEntity> charredLogPile =
             registrate.blockEntity("charred_log_pile", CharredLogPileBlockEntity::new)
                     .validBlocks(MetallurgicaBlocks.charredLogPile).register();
+
+    public static final BlockEntityEntry<HotPlateBlockEntity> hotPlate =
+            registrate.blockEntity("hot_plate", HotPlateBlockEntity::new)
+                    .renderer(() -> HotPlateRenderer::new)
+            .validBlocks(MetallurgicaBlocks.hotPlate).register();
 
     public static void register() {
         MetMaterialBlockEntities.register(registrate().getModEventBus());

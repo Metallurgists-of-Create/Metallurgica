@@ -7,9 +7,9 @@
   "plugin": "dev.metallurgists.metallurgica.foundation.mixin.plugin.MetallurgicaMixinsPlugin",
   "mixins": [
     "BasinBlockEntityMixin",
-    "BasinBlockEntityMixin",
     "BlockMixin",
     "BlockStateMixin",
+    "BuiltInRegistriesMixin",
     "ChemicalInfoTooltipMixin",
     "EntityMixin",
     "PlayerListMixin",
@@ -17,6 +17,7 @@
     "TagManagerMixin",
     "VeinKiller",
     "WorldGenRegionMixin",
+    "accessor.BuiltInRegistriesAccessor",
     "accessor.KineticBlockEntityAccessor",
     "accessor.WindingMachineBlockEntityAccessor",
     "create.block.FluidTankBlockMixin",

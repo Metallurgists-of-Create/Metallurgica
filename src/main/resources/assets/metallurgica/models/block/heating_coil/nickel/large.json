@@ -1,0 +1,6 @@
+{
+	"parent": "metallurgica:block/heating_coil/template/large",
+	"textures": {
+		"coil": "metallurgica:block/heating_coil/nickel"
+	}
+}

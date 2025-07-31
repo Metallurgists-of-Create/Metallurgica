@@ -1,5 +1,6 @@
 package dev.metallurgists.metallurgica.registry;
 
+import com.simibubi.create.AllTags;
 import dev.metallurgists.metallurgica.Metallurgica;
 import dev.metallurgists.metallurgica.content.items.sealed_storage.SealedBundleItem;
 import dev.metallurgists.metallurgica.content.items.temperature.ThermometerItem;
@@ -11,7 +12,11 @@ import dev.metallurgists.metallurgica.foundation.item.MetallurgicaItem;
 import dev.metallurgists.metallurgica.registry.material.init.MetMaterialItems;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import dev.metallurgists.metallurgica.registry.misc.MetallurgicaHeatingCoils;
+import dev.metallurgists.metallurgica.registry.misc.MetallurgicaRegistries;
 import net.minecraft.world.item.Item;
+
+import static dev.metallurgists.metallurgica.content.temperature.hot_plate.heating_coil.HeatingCoilType.heatingCoil;
 
 public class MetallurgicaItems {
     private static final MetallurgicaRegistrate registrate = (MetallurgicaRegistrate) Metallurgica.registrate().setCreativeTab(MCreativeTabs.MAIN);
@@ -104,6 +109,11 @@ public class MetallurgicaItems {
     public static final ItemEntry<Item>
             loosenedBauxite =     registrate.simpleItem("loosened_bauxite", "loosened_materials/bauxite", "loosened_materials"); //why is this a normal item??? Idk lol
 
+    public static final ItemEntry<Item>
+            nickelHeatingCoil = registrate.item("nickel_heating_coil", Item::new)
+            .tag(AllTags.forgeItemTag("heating_coils"), AllTags.forgeItemTag("heating_coils"))
+            .transform(heatingCoil(MetallurgicaHeatingCoils.NICKEL))
+            .register();
 
     // Kiln
     public static final ItemEntry<MetallurgicaItem> ceramicClay = registrate.metallurgicaItem("ceramic_clay");

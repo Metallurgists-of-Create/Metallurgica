@@ -25,7 +25,7 @@ public class MaterialBuilder<T extends Material, P> extends AbstractBuilder<Mate
     private NonNullFunction<Material.Builder, Material.Builder> builderCallback = NonNullUnaryOperator.identity();
 
     public MaterialBuilder(AbstractRegistrate<?> owner, P parent, String name, BuilderCallback callback, NonNullFunction<Material.Builder, T> factory) {
-        super(owner, parent, name, callback, MetallurgicaRegistries.MATERIAL_KEY);
+        super(owner, parent, name, callback, MetallurgicaRegistries.BasicRegistries.MATERIAL_KEY);
         this.factory = factory;
     }
 

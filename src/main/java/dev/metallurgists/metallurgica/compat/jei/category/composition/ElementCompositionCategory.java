@@ -108,7 +108,7 @@ public class ElementCompositionCategory extends CreateRecipeCategory<ElementComp
         int totalElementsAmount = 0;
         for (SubComposition subComposition : subCompositions) {
             for (ElementData elementData : subComposition.getElements()) {
-                Element element = MetallurgicaRegistries.registeredElements.getOrDefault(elementData.element(), MetallurgicaElements.NULL.get());
+                Element element = MetallurgicaRegistries.BasicRegistries.registeredElements.getOrDefault(elementData.element(), MetallurgicaElements.NULL.get());
                 int amount = elementData.amount();
                 elementCounts.put(element, elementCounts.getOrDefault(element, 0) + amount);
                 totalElementsAmount += amount;

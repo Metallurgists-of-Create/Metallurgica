@@ -85,14 +85,14 @@ public class MetallurgicaJei implements IModPlugin {
     @Override
     public void registerIngredients(IModIngredientRegistration registration) {
         IColorHelper colorHelper = registration.getColorHelper();
-        registration.register(MetallurgicaJeiConstants.ELEMENT, MetallurgicaRegistries.registeredElements.values(), new ElementIngredientHelper(colorHelper), new ElementIngredientRenderer(16));
+        registration.register(MetallurgicaJeiConstants.ELEMENT, MetallurgicaRegistries.BasicRegistries.registeredElements.values(), new ElementIngredientHelper(colorHelper), new ElementIngredientRenderer(16));
     }
 
     @Override
     public void registerIngredientAliases(IIngredientAliasRegistration registration) {
         registration.addAliases(
                 MetallurgicaJeiConstants.ELEMENT,
-                MetallurgicaRegistries.registeredElements.values(),
+                MetallurgicaRegistries.BasicRegistries.registeredElements.values(),
                 "element");
     }
 

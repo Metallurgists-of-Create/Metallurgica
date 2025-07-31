@@ -13,6 +13,7 @@ import dev.metallurgists.metallurgica.foundation.temperature.server.TemperatureH
 import dev.metallurgists.metallurgica.registry.*;
 import dev.metallurgists.metallurgica.registry.material.*;
 import dev.metallurgists.metallurgica.registry.misc.MetallurgicaElements;
+import dev.metallurgists.metallurgica.registry.misc.MetallurgicaHeatingCoils;
 import dev.metallurgists.metallurgica.registry.misc.MetallurgicaRegistries;
 import dev.metallurgists.metallurgica.registry.misc.MetallurgicaSpecialRecipes;
 import dev.metallurgists.metallurgica.world.MetallurgicaOreFeatureConfigEntries;
@@ -81,8 +82,9 @@ public class Metallurgica
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
         registrate.registerEventListeners(modEventBus);
-        MetallurgicaRegistries.register();
+        MetallurgicaRegistries.BasicRegistries.register();
         MetallurgicaElements.register();
+        MetallurgicaHeatingCoils.register();
         //BIOME_MODIFIERS.register(modEventBus);
         initMaterials(modEventBus);
         MetallurgicaLootModifiers.LOOT_MODIFIERS.register(modEventBus);

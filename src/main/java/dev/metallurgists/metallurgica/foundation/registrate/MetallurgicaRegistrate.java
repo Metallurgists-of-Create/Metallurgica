@@ -1,8 +1,12 @@
 package dev.metallurgists.metallurgica.foundation.registrate;
 
+import com.simibubi.create.api.behaviour.display.DisplaySource;
+import com.simibubi.create.api.registry.CreateRegistries;
+import com.simibubi.create.api.registry.registrate.SimpleBuilder;
 import dev.metallurgists.metallurgica.Metallurgica;
 import dev.metallurgists.metallurgica.content.fluids.types.Acid;
 import dev.metallurgists.metallurgica.content.fluids.types.TransparentTintedFluidType;
+import dev.metallurgists.metallurgica.content.temperature.hot_plate.heating_coil.HeatingCoilType;
 import dev.metallurgists.metallurgica.foundation.fluid.MaterialFluidType;
 import dev.metallurgists.metallurgica.foundation.fluid.MoltenMetalFluid;
 import dev.metallurgists.metallurgica.foundation.fluid.VirtualMaterialFluid;
@@ -35,6 +39,7 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import dev.metallurgists.metallurgica.registry.misc.MetallurgicaRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
@@ -50,6 +55,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
@@ -211,21 +217,11 @@ public class MetallurgicaRegistrate extends CreateRegistrate {
     public <T extends Material, P> MaterialBuilder<T, P> material(P parent, String name, NonNullFunction<Material.Builder, T> factory) {
         return entry(name, callback -> MaterialBuilder.create(this, parent, name, callback, factory));
     }
-    
-    public enum Dimension {
-        OVERWORLD(BiomeTags.IS_OVERWORLD),
-        NETHER(BiomeTags.IS_NETHER),
-        END(BiomeTags.IS_END);
-        
-        public final TagKey<Biome> biomeTag;
-        
-        Dimension(TagKey<Biome> biomeTag) {
-            this.biomeTag = biomeTag;
-        }
-        
-        public TagKey<Biome> biomeTag() {
-            return biomeTag;
-        }
+
+    public <T extends HeatingCoilType> SimplerBuilder<HeatingCoilType, T, MetallurgicaRegistrate> heatingCoil(String name, Supplier<T> supplier) {
+        return this.entry(name, callback -> new SimplerBuilder<>(
+                this, this, name, callback, MetallurgicaRegistries.HEATING_COIL_TYPE, supplier
+        ).byItem(HeatingCoilType.BY_ITEM));
     }
     
 

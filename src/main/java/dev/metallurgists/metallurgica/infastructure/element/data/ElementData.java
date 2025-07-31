@@ -56,7 +56,7 @@ public record ElementData(@Getter ResourceLocation element, @Getter int amount) 
     }
 
     public String getDisplay() {
-        StringBuilder display = new StringBuilder(MetallurgicaRegistries.registeredElements.getOrDefault(element, MetallurgicaElements.NULL.get()).getSymbol());
+        StringBuilder display = new StringBuilder(MetallurgicaRegistries.BasicRegistries.registeredElements.getOrDefault(element, MetallurgicaElements.NULL.get()).getSymbol());
         if (amount > 1)
             display.append(amount);
         return ClientUtil.toSmallDownNumbers(display.toString());

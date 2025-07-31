@@ -1,5 +1,8 @@
 package dev.metallurgists.metallurgica.registry;
 
+import com.simibubi.create.content.fluids.tank.FluidTankModel;
+import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import dev.metallurgists.metallurgica.Metallurgica;
 import dev.metallurgists.metallurgica.content.blocks.SaltBlock;
 import dev.metallurgists.metallurgica.content.fluids.channel.channel_depot.ChannelDepotBlock;
@@ -31,6 +34,8 @@ import dev.metallurgists.metallurgica.content.primitive.log_pile.LogPileBlock;
 import dev.metallurgists.metallurgica.content.primitive.log_pile.LogPileGenerator;
 import dev.metallurgists.metallurgica.content.primitive.log_pile.charred_pile.CharredLogPileBlock;
 import dev.metallurgists.metallurgica.content.temperature.DebugTempBlock;
+import dev.metallurgists.metallurgica.content.temperature.hot_plate.HotPlateBlock;
+import dev.metallurgists.metallurgica.content.temperature.hot_plate.HotPlateModel;
 import dev.metallurgists.metallurgica.foundation.MBlockStateGen;
 import dev.metallurgists.metallurgica.foundation.MBuilderTransformers;
 import dev.metallurgists.metallurgica.foundation.config.server.subcat.MStress;
@@ -499,6 +504,17 @@ public class MetallurgicaBlocks {
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/nozzle/small"))))
             .item()
             .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/nozzle/small")))
+            .build()
+            .register();
+
+    public static final BlockEntry<HotPlateBlock> hotPlate = registrate.block("hot_plate", HotPlateBlock::new)
+            .initialProperties(SharedProperties::copperMetal)
+            .properties(p -> p.strength(0.5F).sound(SoundType.NETHERITE_BLOCK))
+            .onRegister(CreateRegistrate.blockModel(() -> HotPlateModel::standard))
+            .addLayer(() -> RenderType::cutoutMipped)
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(prov.modLoc("block/hot_plate/block"))))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/hot_plate/item")))
             .build()
             .register();
 

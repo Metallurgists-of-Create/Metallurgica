@@ -25,7 +25,7 @@ public class ElementBuilder<T extends Element, P> extends AbstractBuilder<Elemen
     private NonNullFunction<Element.Properties, Element.Properties> propertiesCallback = NonNullUnaryOperator.identity();
 
     public ElementBuilder(AbstractRegistrate<?> owner, P parent, String name, String symbol, BuilderCallback callback, NonNullFunction<Element.Properties, T> factory) {
-        super(owner, parent, name, callback, MetallurgicaRegistries.ELEMENT_KEY);
+        super(owner, parent, name, callback, MetallurgicaRegistries.BasicRegistries.ELEMENT_KEY);
         this.factory = factory;
         this.symbol = symbol;
     }
@@ -62,7 +62,7 @@ public class ElementBuilder<T extends Element, P> extends AbstractBuilder<Elemen
 
     @Override
     public ElementEntry<T> register() {
-        MetallurgicaRegistries.registeredElements.put(new ResourceLocation(getOwner().getModid(), getName()), createEntry());
+        MetallurgicaRegistries.BasicRegistries.registeredElements.put(new ResourceLocation(getOwner().getModid(), getName()), createEntry());
         return (ElementEntry<T>) super.register();
     }
 }
