@@ -2,15 +2,14 @@ package dev.metallurgists.metallurgica.content.temperature.hot_plate;
 
 import com.drmangotea.tfmg.content.electricity.base.ElectricBlockEntity;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import dev.metallurgists.metallurgica.content.temperature.hot_plate.heating_coil.HeatingCoilType;
+import dev.metallurgists.metallurgica.content.temperature.hot_plate.heating_coil.behaviour.HeatingCoilBehaviour;
 import dev.metallurgists.metallurgica.foundation.block_entity.IMultiBlockEntityEnergyContainer;
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -19,6 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
+import java.util.List;
 import java.util.Objects;
 
 public class HotPlateBlockEntity extends ElectricBlockEntity implements IMultiBlockEntityEnergyContainer {
@@ -30,8 +30,7 @@ public class HotPlateBlockEntity extends ElectricBlockEntity implements IMultiBl
     protected boolean updateConnectivity;
     protected boolean updateCapability;
 
-    @Getter @Setter
-    private HeatingCoilData heatingCoil = null;
+    HeatingCoilBehaviour heatingCoilBehaviour;
 
     protected int width;
     protected int height;
@@ -40,8 +39,6 @@ public class HotPlateBlockEntity extends ElectricBlockEntity implements IMultiBl
     protected int syncCooldown;
     protected boolean queuedSync;
     boolean running = false;
-
-    float coilRenderX, coilRenderZ;
 
     public HotPlateBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -52,15 +49,20 @@ public class HotPlateBlockEntity extends ElectricBlockEntity implements IMultiBl
         this.refreshCapability();
     }
 
+    @Override
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+        behaviours.add(heatingCoilBehaviour = new HeatingCoilBehaviour(this));
+    }
+
     public InteractionResult setOrRemoveCoil(ItemStack stack, Player player) {
+        HeatingCoilBehaviour coil = this.getBehaviour(HeatingCoilBehaviour.TYPE);
         if (stack.isEmpty()) {
-            if (player.isShiftKeyDown() && this.heatingCoil != null) {
-                ItemStack coilStack = this.heatingCoil.itemIn();
+            if (player.isShiftKeyDown() && coil.getCoilType() != null) {
+                ItemStack coilStack = coil.removeCoil();
                 if (!coilStack.isEmpty()) {
                     if (!player.getInventory().add(coilStack)) {
                         player.drop(coilStack, false);
                     }
-                    setHeatingCoil(null);
                     return InteractionResult.SUCCESS;
                 }
             } else return InteractionResult.PASS;
@@ -68,17 +70,16 @@ public class HotPlateBlockEntity extends ElectricBlockEntity implements IMultiBl
         HeatingCoilType newType = HeatingCoilType.get(stack.getItem());
         if (newType != null) {
             ItemStack toSave = stack.copyWithCount(1);
-            HeatingCoilData newData = new HeatingCoilData(toSave, newType);
-            if (this.heatingCoil != null) {
-                if (this.heatingCoil.type() == newType) {
+            if (coil.getCoilType() != null) {
+                if (coil.getCoilType() == newType) {
                     return InteractionResult.PASS; // No change
                 } else {
-                    ItemStack oldStack = this.heatingCoil.itemIn();
+                    ItemStack oldStack = coil.removeCoil();
                     if (!oldStack.isEmpty()) {
                         if (!player.getInventory().add(oldStack)) {
                             player.drop(oldStack, false);
                         }
-                        setHeatingCoil(newData);
+                        coil.setCoil(toSave);
                         return InteractionResult.SUCCESS;
                     }
                 }
@@ -86,7 +87,7 @@ public class HotPlateBlockEntity extends ElectricBlockEntity implements IMultiBl
                 if (!player.getAbilities().instabuild) {
                     toSave.shrink(1);
                 }
-                setHeatingCoil(newData);
+                coil.setCoil(toSave);
                 return InteractionResult.SUCCESS;
             }
         }
@@ -96,12 +97,20 @@ public class HotPlateBlockEntity extends ElectricBlockEntity implements IMultiBl
     }
 
     protected void updateConnectivity() {
-        this.updateConnectivity = false;
-        if (!this.level.isClientSide) {
-            if (this.isController()) {
-                ConnectivityHandler.formMulti(this);
-            }
-        }
+        updateConnectivity = false;
+        if (level.isClientSide)
+            return;
+        if (!isController())
+            return;
+        ConnectivityHandler.formMulti(this);
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        sendData();
+        if (level.isClientSide)
+            invalidateRenderBoundingBox();
     }
 
     public void lazyTick() {
@@ -112,30 +121,25 @@ public class HotPlateBlockEntity extends ElectricBlockEntity implements IMultiBl
 
     public void tick() {
         super.tick();
-        if (this.syncCooldown > 0) {
-            --this.syncCooldown;
-            if (this.syncCooldown == 0 && this.queuedSync) {
-                this.sendData();
-            }
+        if (syncCooldown > 0) {
+            syncCooldown--;
+            if (syncCooldown == 0 && queuedSync)
+                sendData();
         }
 
-        if (this.lastKnownPos == null) {
-            this.lastKnownPos = this.getBlockPos();
-        } else if (!this.lastKnownPos.equals(this.worldPosition) && this.worldPosition != null) {
-            this.onPositionChanged();
+        if (lastKnownPos == null)
+            lastKnownPos = getBlockPos();
+        else if (!lastKnownPos.equals(worldPosition) && worldPosition != null) {
+            onPositionChanged();
             return;
         }
 
-        coilRenderX = this.worldPosition.getX() - this.lastKnownPos.getX();
-
-        if (this.updateCapability) {
-            this.updateCapability = false;
-            this.refreshCapability();
+        if (updateCapability) {
+            updateCapability = false;
+            refreshCapability();
         }
-
-        if (this.updateConnectivity) {
-            this.updateConnectivity();
-        }
+        if (updateConnectivity)
+            updateConnectivity();
     }
 
     private void onPositionChanged() {
@@ -170,13 +174,13 @@ public class HotPlateBlockEntity extends ElectricBlockEntity implements IMultiBl
     }
 
     public void sendData() {
-        if (this.syncCooldown > 0) {
-            this.queuedSync = true;
-        } else {
-            super.sendData();
-            this.queuedSync = false;
-            this.syncCooldown = 8;
+        if (syncCooldown > 0) {
+            queuedSync = true;
+            return;
         }
+        super.sendData();
+        queuedSync = false;
+        syncCooldown = SYNC_RATE;
     }
 
     @Override
@@ -194,41 +198,40 @@ public class HotPlateBlockEntity extends ElectricBlockEntity implements IMultiBl
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
         BlockPos controllerBefore = this.controller;
-        int prevSize = this.width;
-        int prevHeight = this.height;
-        this.updateConnectivity = compound.contains("Uninitialized");
-        this.controller = null;
-        this.lastKnownPos = null;
+        int prevSize = width;
+        int prevHeight = height;
+        updateConnectivity = compound.contains("Uninitialized");
+        controller = null;
+        lastKnownPos = null;
 
         compound.getBoolean("IsRunning");
+
         if (compound.contains("LastKnownPos")) {
             this.lastKnownPos = NbtUtils.readBlockPos(compound.getCompound("LastKnownPos"));
         }
-
         if (compound.contains("Controller")) {
             this.controller = NbtUtils.readBlockPos(compound.getCompound("Controller"));
         }
 
         if (this.isController()) {
-            this.width = compound.getInt("Size");
-            this.height = compound.getInt("Height");
-            this.heatingCoil = HeatingCoilData.read(compound);
+            width = compound.getInt("Size");
+            height = compound.getInt("Height");
         }
 
         this.updateCapability = true;
-        if (clientPacket) {
-            boolean changeOfController = !Objects.equals(controllerBefore, this.controller);
-            if (changeOfController || prevSize != this.width || prevHeight != this.height) {
-                if (this.hasLevel()) {
-                    this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 16);
-                }
 
-                if (this.isController()) {
-                    //this.tankInventory.setCapacity(getCapacityMultiplier() * this.getTotalTankSize());
-                }
+        if (!clientPacket)
+            return;
 
-                this.invalidateRenderBoundingBox();
-            }
+        boolean changeOfController = !Objects.equals(controllerBefore, controller);
+        if (changeOfController || prevSize != width || prevHeight != height) {
+            if (hasLevel())
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 16);
+            invalidateRenderBoundingBox();
+        }
+
+        if (compound.contains("LazySync")) {
+
         }
     }
 
@@ -245,7 +248,6 @@ public class HotPlateBlockEntity extends ElectricBlockEntity implements IMultiBl
         if (isController()) {
             compound.putInt("Size", width);
             compound.putInt("Height", height);
-            if (this.heatingCoil != null) this.heatingCoil.write(compound);
         }
         if (this.lastKnownPos != null) {
             compound.put("LastKnownPos", NbtUtils.writeBlockPos(this.lastKnownPos));
@@ -256,17 +258,16 @@ public class HotPlateBlockEntity extends ElectricBlockEntity implements IMultiBl
         }
 
         super.write(compound, clientPacket);
+
+        if (!clientPacket)
+            return;
+        if (queuedSync)
+            compound.putBoolean("LazySync", true);
     }
 
     @Override
     public void destroy() {
         super.destroy();
-        if (this.isController()) {
-            if (this.heatingCoil != null && !heatingCoil.itemIn().isEmpty() && level != null) {
-                Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), heatingCoil.itemIn());
-            }
-        }
-        setRemoved();
     }
 
 

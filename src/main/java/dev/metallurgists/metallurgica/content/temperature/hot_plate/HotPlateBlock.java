@@ -42,11 +42,11 @@ public class HotPlateBlock extends Block implements IWrenchable, IBE<HotPlateBlo
     }
 
     public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean moved) {
-        if (oldState.getBlock() != state.getBlock()) {
-            if (!moved) {
-                this.withBlockEntityDo(world, pos, HotPlateBlockEntity::updateConnectivity);
-            }
-        }
+        if (oldState.getBlock() == state.getBlock())
+            return;
+        if (moved)
+            return;
+        withBlockEntityDo(world, pos, HotPlateBlockEntity::updateConnectivity);
     }
 
     @Override

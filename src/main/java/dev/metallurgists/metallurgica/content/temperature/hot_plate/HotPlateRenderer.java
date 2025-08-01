@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.metallurgists.metallurgica.content.temperature.hot_plate.heating_coil.HeatingCoilType;
+import dev.metallurgists.metallurgica.content.temperature.hot_plate.heating_coil.behaviour.HeatingCoilBehaviour;
 import net.createmod.catnip.render.CachedBuffers;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -26,11 +27,11 @@ public class HotPlateRenderer extends SmartBlockEntityRenderer<HotPlateBlockEnti
         BlockState blockState = be.getBlockState();
         HotPlateBlockEntity controllerBE = be.getControllerBE();
 
-        HeatingCoilData coilData = controllerBE.getHeatingCoil();
+        HeatingCoilBehaviour coilBehaviour = controllerBE.getControllerBE().getBehaviour(HeatingCoilBehaviour.TYPE);
 
-        if (coilData == null) return;
+        if (coilBehaviour.getCoilType() == null) return;
 
-        HeatingCoilType heatingCoil = coilData.type();
+        HeatingCoilType heatingCoil = coilBehaviour.getCoilType();
 
         if (heatingCoil == null) return;
 
