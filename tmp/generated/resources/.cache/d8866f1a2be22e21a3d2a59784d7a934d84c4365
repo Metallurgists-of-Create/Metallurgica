@@ -1,7 +1,0 @@
-// 1.20.1	2025-07-06T20:54:02.5856967	Metallurgica's Generated Registry Entries
-05c24d66a0632dbc8124d5872940bd914ec34a01 data/metallurgica/damage_type/acid_burn.json
-15701a6e7e4a0e1d7107acd06ef9dc30a3bede50 data/metallurgica/damage_type/crushing.json
-4b4ec1510c1a827956674c4b4074b8fb4495cc00 data/metallurgica/damage_type/reverbaratory.json
-49fe5d9fadf7dba668b1bf53ffbdd081b9e1f321 data/metallurgica/forge/biome_modifier/kimberlite_pipe.json
-0d68d7245800b7424277d6ad5425149249cbeda6 data/metallurgica/worldgen/configured_feature/kimberlite_pipe.json
-d318067f77484fc63e72fc9aeb9e55ca6674dec4 data/metallurgica/worldgen/placed_feature/kimberlite_pipe.json

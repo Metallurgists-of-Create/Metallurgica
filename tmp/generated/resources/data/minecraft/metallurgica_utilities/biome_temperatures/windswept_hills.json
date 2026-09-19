@@ -1,7 +1,0 @@
-{
-  "biome": "minecraft:windswept_hills",
-  "surfaceTemperature": 8.1,
-  "temperatureBlendBlacklist": [
-    "minecraft:windswept_gravelly_hills"
-  ]
-}

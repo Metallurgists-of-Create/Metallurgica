@@ -1,7 +1,0 @@
-{
-  "biome": "minecraft:eroded_badlands",
-  "surfaceTemperature": 26.6,
-  "temperatureBlendBlacklist": [
-    "minecraft:badlands"
-  ]
-}

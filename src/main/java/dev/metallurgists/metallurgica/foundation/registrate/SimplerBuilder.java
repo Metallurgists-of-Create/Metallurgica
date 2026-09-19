@@ -15,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Fluid;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.BiConsumer;
@@ -25,6 +26,7 @@ import java.util.function.Supplier;
  * Literally just SimpleBuilder but with the option to associate items.
  * @see SimpleBuilder
  */
+@SuppressWarnings("deprecation")
 public class SimplerBuilder<R, T extends R, P> extends AbstractBuilder<R, T, P, SimplerBuilder<R, T, P>> {
     private final Supplier<T> value;
 
@@ -40,19 +42,17 @@ public class SimplerBuilder<R, T extends R, P> extends AbstractBuilder<R, T, P, 
     }
 
     @Override
-    protected T createEntry() {
+    protected @NotNull T createEntry() {
         return this.value.get();
     }
 
     // for setup
 
-    @SuppressWarnings("deprecation")
     public SimplerBuilder<R, T, P> byBlock(SimpleRegistry<Block, R> registry) {
         this.byBlock = SimpleRegistryAccess.of(registry, Block::builtInRegistryHolder);
         return this;
     }
 
-    @SuppressWarnings("deprecation")
     public SimplerBuilder<R, T, P> byBlock(SimpleRegistry.Multi<Block, R> registry) {
         this.byBlock = SimpleRegistryAccess.of(registry, Block::builtInRegistryHolder);
         return this;
@@ -68,37 +68,31 @@ public class SimplerBuilder<R, T extends R, P> extends AbstractBuilder<R, T, P, 
         return this;
     }
 
-    @SuppressWarnings("deprecation")
     public SimplerBuilder<R, T, P> byEntity(SimpleRegistry<EntityType<?>, R> registry) {
         this.byEntity = SimpleRegistryAccess.of(registry, EntityType::builtInRegistryHolder);
         return this;
     }
 
-    @SuppressWarnings("deprecation")
     public SimplerBuilder<R, T, P> byEntity(SimpleRegistry.Multi<EntityType<?>, R> registry) {
         this.byEntity = SimpleRegistryAccess.of(registry, EntityType::builtInRegistryHolder);
         return this;
     }
 
-    @SuppressWarnings("deprecation")
     public SimplerBuilder<R, T, P> byFluid(SimpleRegistry<Fluid, R> registry) {
         this.byFluid = SimpleRegistryAccess.of(registry, Fluid::builtInRegistryHolder);
         return this;
     }
 
-    @SuppressWarnings("deprecation")
     public SimplerBuilder<R, T, P> byFluid(SimpleRegistry.Multi<Fluid, R> registry) {
         this.byFluid = SimpleRegistryAccess.of(registry, Fluid::builtInRegistryHolder);
         return this;
     }
 
-    @SuppressWarnings("deprecation")
     public SimplerBuilder<R, T, P> byItem(SimpleRegistry<Item, R> registry) {
         this.byItem = SimpleRegistryAccess.of(registry, Item::builtInRegistryHolder);
         return this;
     }
 
-    @SuppressWarnings("deprecation")
     public SimplerBuilder<R, T, P> byItem(SimpleRegistry.Multi<Item, R> registry) {
         this.byItem = SimpleRegistryAccess.of(registry, Item::builtInRegistryHolder);
         return this;

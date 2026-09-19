@@ -1,9 +1,0 @@
-{
-  "values": [
-    "create:framed_glass",
-    "create:tiled_glass",
-    "create:horizontal_framed_glass",
-    "create:vertical_framed_glass",
-    "#metallurgica:reverbaratory_wall"
-  ]
-}

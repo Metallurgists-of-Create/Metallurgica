@@ -1,6 +1,0 @@
-{
-  "parent": "metallurgica:block/rotary_kiln_segment/textures",
-  "loader": "forge:obj",
-  "flip_v": true,
-  "model": "metallurgica:models/block/rotary_kiln_segment/rotary_kiln_segment.obj"
-}

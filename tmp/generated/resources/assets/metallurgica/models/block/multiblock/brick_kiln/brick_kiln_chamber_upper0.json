@@ -1,6 +1,0 @@
-{
-  "parent": "metallurgica:block/multiblock/brick_kiln/brick_kiln_chamber_upper",
-  "textures": {
-    "outer": "metallurgica:block/decoration/bricks/refactory_bricks_0"
-  }
-}

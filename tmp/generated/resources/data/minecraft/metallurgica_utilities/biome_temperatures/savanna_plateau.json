@@ -1,8 +1,0 @@
-{
-  "biome": "minecraft:savanna_plateau",
-  "surfaceTemperature": 26.6,
-  "temperatureBlendBlacklist": [
-    "minecraft:savanna",
-    "minecraft:windswept_savanna"
-  ]
-}

@@ -1,7 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "kubejs:item/acid_barrel",
-    "layer1": "kubejs:item/acid_barrel_label"
-  }
-}

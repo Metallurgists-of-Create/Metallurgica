@@ -1,6 +1,0 @@
-{
-  "parent": "metallurgica:block/bellows_intake/side",
-  "textures": {
-    "base": "metallurgica:block/bellows_intake/bronze"
-  }
-}

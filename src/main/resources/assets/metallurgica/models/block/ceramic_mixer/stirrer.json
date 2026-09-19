@@ -1,6 +1,0 @@
-{
-  "parent": "metallurgica:block/ceramic_mixer/textures",
-  "loader": "forge:obj",
-  "flip_v": true,
-  "model": "metallurgica:models/block/ceramic_mixer/ceramic_mixer_stirrer.obj"
-}

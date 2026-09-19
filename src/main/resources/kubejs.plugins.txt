@@ -1,1 +1,1 @@
-com.freezedown.metallurgica.compat.kubejs.KubeJSMetallurgicaPlugin
+dev.metallurgists.metallurgica.integration.kubejs.KubeJSMetallurgicaPlugin metallurgica

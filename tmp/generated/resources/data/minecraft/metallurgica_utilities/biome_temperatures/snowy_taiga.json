@@ -1,9 +1,0 @@
-{
-  "biome": "minecraft:snowy_taiga",
-  "surfaceTemperature": 0.5,
-  "temperatureBlendBlacklist": [
-    "minecraft:snowy_beach",
-    "minecraft:snowy_plains",
-    "minecraft:snowy_slopes"
-  ]
-}

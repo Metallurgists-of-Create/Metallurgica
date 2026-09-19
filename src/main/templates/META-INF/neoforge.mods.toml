@@ -1,7 +1,8 @@
 modLoader="javafml"
 loaderVersion="[1,)"
-license="All rights reserved"
+license="MIT NON-AI"
 issueTrackerURL="https://github.com/Metallurgists-of-Create/Metallurgica/issues"
+
 [[mods]]
 modId="metallurgica"
 version="${mod_version}"
@@ -11,29 +12,44 @@ logoFile="metallurgica.png"
 credits="Metallurgists of Create"
 authors="PouffyDev"
 description='''
-Replaces the vanilla ore generation with a new system that requires large processing trees to get the most out of your ore deposits.
+{mod_description}
 '''
+
+[[mixins]]
+config = "metallurgica.mixins.json"
+
+
 [[dependencies.metallurgica]]
 modId="neoforge"
-mandatory=true
+type="required"
 versionRange="[${neo_version},)"
 ordering="NONE"
 side="BOTH"
+
 [[dependencies.metallurgica]]
 modId="minecraft"
-mandatory=true
+type="required"
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
+
 [[dependencies.metallurgica]]
-modId="tfmg"
-mandatory=true
-versionRange="[1.2.4b,)"
+modId="kubejs"
+type="optional"
+versionRange="[${kubejs_version},)"
 ordering="AFTER"
 side="BOTH"
+
+[[dependencies.metallurgica]]
+modId="tfmg"
+type="required"
+versionRange="[{$tfmg_version},)"
+ordering="AFTER"
+side="BOTH"
+
 [[dependencies.metallurgica]]
 modId="create"
-mandatory=true
+type="required"
 versionRange="[6.0.10,)"
 ordering="NONE"
 side="BOTH"

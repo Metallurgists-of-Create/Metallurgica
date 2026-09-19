@@ -1,9 +1,0 @@
-{
-  "parent": "metallurgica:block/crucible",
-  "textures": {
-    "bottom": "metallurgica:block/unfired_crucible_bottom",
-    "inner": "metallurgica:block/unfired_ceramic_pot_inner",
-    "particle": "metallurgica:block/unfired_ceramic_pot_side",
-    "side": "metallurgica:block/unfired_ceramic_pot_side"
-  }
-}

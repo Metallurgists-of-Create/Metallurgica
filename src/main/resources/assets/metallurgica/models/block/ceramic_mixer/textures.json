@@ -1,8 +1,0 @@
-{
-  "parent": "block/block",
-  "ambientocclusion": false,
-  "textures": {
-    "stirrer": "metallurgica:block/log_pile",
-    "particle": "metallurgica:block/log_pile"
-  }
-}

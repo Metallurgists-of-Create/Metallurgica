@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "metallurgica:block/palettes/minerals/layered_coal/top_2",
-    "side": "metallurgica:block/palettes/minerals/layered_coal/side_2"
-  }
-}

@@ -1,7 +1,0 @@
-{
-  "parent": "metallurgica:block/log_pile/3",
-  "textures": {
-    "log": "metallurgica:block/charcoal_pile",
-    "side": "metallurgica:block/charcoal_pile_side"
-  }
-}

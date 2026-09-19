@@ -1,0 +1,30 @@
+{
+  "type": "metallurgica:replace_item",
+  "conditions": [],
+  "replacements": [
+    {
+      "input": {
+        "id": "minecraft:iron_ingot"
+      },
+      "output": {
+        "id": "create:crushed_raw_iron"
+      }
+    },
+    {
+      "input": {
+        "id": "minecraft:gold_ingot"
+      },
+      "output": {
+        "id": "create:crushed_raw_gold"
+      }
+    },
+    {
+      "input": {
+        "id": "minecraft:copper_ingot"
+      },
+      "output": {
+        "id": "create:crushed_raw_copper"
+      }
+    }
+  ]
+}

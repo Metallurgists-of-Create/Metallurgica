@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "metallurgica:block/drill_expansion_end",
-    "side": "metallurgica:block/drill_expansion"
-  }
-}

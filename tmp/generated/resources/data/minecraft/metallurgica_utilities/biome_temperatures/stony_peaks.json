@@ -1,7 +1,0 @@
-{
-  "biome": "minecraft:stony_peaks",
-  "surfaceTemperature": 8.2,
-  "temperatureBlendBlacklist": [
-    "minecraft:jagged_peaks"
-  ]
-}

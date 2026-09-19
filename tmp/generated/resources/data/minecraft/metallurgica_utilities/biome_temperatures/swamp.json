@@ -1,7 +1,0 @@
-{
-  "biome": "minecraft:swamp",
-  "surfaceTemperature": 26.6,
-  "temperatureBlendBlacklist": [
-    "minecraft:mangrove_swamp"
-  ]
-}

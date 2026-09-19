@@ -1,7 +1,0 @@
-{
-  "biome": "minecraft:old_growth_birch_forest",
-  "surfaceTemperature": 8.2,
-  "temperatureBlendBlacklist": [
-    "minecraft:birch_forest"
-  ]
-}
