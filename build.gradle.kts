@@ -1,7 +1,7 @@
 plugins {
     id("java-library")
     id("idea")
-    id("net.neoforged.moddev") version "2.0.147"
+    id("net.neoforged.moddev") version "2.0.148"
 }
 
 version = "${property("minecraft_version")}-${property("mod_version")}"
@@ -151,7 +151,7 @@ dependencies {
 
     //implementation("com.drmangotea:tfmg:${property("minecraft_version")}-${property("tfmg_version")}") { isTransitive = false }
 
-    implementation("com.drmangotea:tfmg:${property("minecraft_version")}-${property("tfmg_version")}-build.207") { isTransitive = false }
+    implementation("com.drmangotea:tfmg:${property("minecraft_version")}-${property("tfmg_version")}") { isTransitive = false }
 
     implementation("dev.latvian.mods:kubejs-neoforge:${property("kubejs_version")}")
     implementation("dev.latvian.mods:rhino-neoforge:${property("rhino_version")}")
